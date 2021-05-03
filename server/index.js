@@ -19,6 +19,8 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
+require('./src/db/mongoose')
+require('./src/utils/user')
 
 io.on('connection', socket => {
     console.log('new webSocket connection');
@@ -31,8 +33,6 @@ io.on('connection', socket => {
 
     // disconnect
 })
-
-
 
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));

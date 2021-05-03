@@ -9,12 +9,12 @@ const User = mongoose.model("User", {
   email: {
     type: String,
     required: true,
+    unique: true,
     validate(value) {
       if (!validator.isEmail(value)) {
         throw new Error("not a valid email");
       }
     },
-    unique: true,
   },
   dateAdded: {
     type: Date,
@@ -35,8 +35,8 @@ const User = mongoose.model("User", {
     },
   ],
   password: {
-      type: String
-  }
+    type: String,
+  },
 });
 
 module.exports = User;
