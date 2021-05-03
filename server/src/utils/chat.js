@@ -32,4 +32,5 @@ module.exports = {
   addChat,
   getChat,
   getAllChats,
+  getAllUserChats,
 };
