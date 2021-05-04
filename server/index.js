@@ -5,10 +5,18 @@ const path = require("path");
 const app = express();
 
 // socket.io -
-const socketio = require("socket.io");
+
 const http = require("http");
 const server = http.createServer(app);
-const io = socketio(server);
+app.use(cors());
+const socketIo = require("socket.io")
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
 
 //routers
 const usersRouter = require("./src/routers/user");
@@ -20,7 +28,7 @@ require("./src/db/mongoose");
 
 app.use(express.json());
 app.use(express.static(publicDirectory));
-app.use(cors());
+
 app.use(usersRouter);
 app.use(chatsRouter);
 
@@ -34,50 +42,71 @@ const {
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
-  socket.on("join", (user, callback) => {
-    socket.join(user.room);
+  // socket.on("join", (user, callback) => {
+  //   socket.join(user.room);
 
-    socket.emit("message", generateMessage("Admin", "Welcome!"));
-    socket.broadcast
-      .to(user.room)
-      .emit(
-        "message",
-        generateMessage("Admin", `${user.username} has joined!`)
-      );
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    });
+  //   socket.emit("message", generateMessage("Admin", "Welcome!"));
+  //   socket.broadcast
+  //     .to(user.room)
+  //     .emit(
+  //       "message",
+  //       generateMessage("Admin", `${user.username} has joined!`)
+  //     );
+  //   io.to(user.room).emit("roomData", {
+  //     room: user.room,
+  //     users: getUsersInRoom(user.room),
+  //   });
 
-    callback();
+  //   callback();
+  // });
+
+  socket.on("sendMessage", (message) => { // !
+    console.log(message);
+
+    // io.to(user.room).emit("message", generateMessage(user.username, message));
   });
 
-  socket.on("sendMessage", ({ message, user }, callback) => {
-    io.to(user.room).emit("message", generateMessage(user.username, message));
-    callback();
-  });
+  // socket.on("sendLocation", ({ coords, user }, callback) => {
+  //   io.to(user.room).emit(
+  //     "locationMessage",
+  //     generateLocationMessage(
+  //       user.username,
+  //       `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
+  //     )
+  //   );
+  //   callback();
+  // });
 
-  socket.on("sendLocation", ({ coords, user }, callback) => {
-    io.to(user.room).emit(
-      "locationMessage",
-      generateLocationMessage(
-        user.username,
-        `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
-      )
-    );
-    callback();
-  });
-
-  socket.on("disconnect", () => {
-    io.to(user.room).emit(
-      "message",
-      generateMessage("Admin", `${user.username} has left!`)
-    );
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    });
-  });
+  // socket.on("disconnect", () => {
+  //   io.to(user.room).emit(
+  //     "message",
+  //     generateMessage("Admin", `${user.username} has left!`)
+  //   );
+  //   io.to(user.room).emit("roomData", {
+  //     room: user.room,
+  //     users: getUsersInRoom(user.room),
+  //   });
+  // });
 });
+
+// let interval;
+
+// io.on("connection", (socket) => {
+//   console.log("New client connected");
+//   if (interval) {
+//     clearInterval(interval);
+//   }
+//   interval = setInterval(() => getApiAndEmit(socket), 1000);
+//   socket.on("disconnect", () => {
+//     console.log("Client disconnected");
+//     clearInterval(interval);
+//   });
+// });
+
+// const getApiAndEmit = (socket) => {
+//   const response = new Date();
+//   // Emitting a new message. Will be consumed by the client
+//   socket.emit("FromAPI", response);
+// };
 
 server.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
