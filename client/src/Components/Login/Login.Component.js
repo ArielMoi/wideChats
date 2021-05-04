@@ -2,7 +2,9 @@ const Login = () => {
     return (
         <div>
             <form>
-                <label>enter your id</label>
+                <label>username</label>
+                <input type="text" required></input>
+                <label>email</label>
                 <input type="text" required></input>
                 <button type='submit'>Login</button>
                 <button>create a new id</button>

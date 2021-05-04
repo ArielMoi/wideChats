@@ -5,10 +5,8 @@ const path = require("path");
 const app = express();
 
 // socket.io -
-
 const http = require("http");
 const server = http.createServer(app);
-app.use(cors());
 const socketIo = require("socket.io")
 const io = socketIo(server, {
   cors: {
@@ -28,7 +26,7 @@ require("./src/db/mongoose");
 
 app.use(express.json());
 app.use(express.static(publicDirectory));
-
+app.use(cors());
 app.use(usersRouter);
 app.use(chatsRouter);
 
@@ -42,6 +40,7 @@ const {
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
+  
   // socket.on("join", (user, callback) => {
   //   socket.join(user.room);
 
@@ -60,7 +59,7 @@ io.on("connection", (socket) => {
   //   callback();
   // });
 
-  socket.on("sendMessage", (message) => { // !
+  socket.on("sendMessage", (message) => {
     console.log(message);
 
     // io.to(user.room).emit("message", generateMessage(user.username, message));
@@ -88,25 +87,5 @@ io.on("connection", (socket) => {
   //   });
   // });
 });
-
-// let interval;
-
-// io.on("connection", (socket) => {
-//   console.log("New client connected");
-//   if (interval) {
-//     clearInterval(interval);
-//   }
-//   interval = setInterval(() => getApiAndEmit(socket), 1000);
-//   socket.on("disconnect", () => {
-//     console.log("Client disconnected");
-//     clearInterval(interval);
-//   });
-// });
-
-// const getApiAndEmit = (socket) => {
-//   const response = new Date();
-//   // Emitting a new message. Will be consumed by the client
-//   socket.emit("FromAPI", response);
-// };
 
 server.listen(PORT, () => console.log(`Server running on port: ${PORT}`));

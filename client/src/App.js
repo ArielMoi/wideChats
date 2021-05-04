@@ -1,10 +1,10 @@
 import React from "react";
-
-// import Login from "./Components/Login/Login.Component";
-
+import axios from "axios";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
+import ChatShowcase from "../src/Components/ChatShowcase/ChatShowcase.Component";
+
 const socket = openSocket("http://localhost:5000", {
   cors: {
     origin: "http://localhost:8080",
@@ -14,47 +14,34 @@ const socket = openSocket("http://localhost:5000", {
 
 const App = () => {
   const [msg, setMsg] = useState("");
+  const [chats, setChats] = useState([]);
 
-  const send = (event) => {
+  useEffect(() => {
+    const collectChats = async () => {
+      const arrayOfChats = [];
+      const { data } = await axios.get("http://localhost:5000/chats/");
+      data.map((chat) => arrayOfChats.push(Object.values(chat)));
+      setChats(arrayOfChats);
+    };
+    collectChats();
+  }, []);
+
+  const sendMessage = (event) => {
     event.preventDefault();
-    // console.log(msg);
     socket.emit("sendMessage", msg);
   };
 
   return (
     <div>
+      {chats.map((chat) => (
+        <ChatShowcase chatName={chat[2]} />
+      ))}
       <form>
         <input type="text" onChange={(e) => setMsg(e.target.value)} />
-        <button onClick={send}>send</button>
+        <button onClick={sendMessage}>send</button>
       </form>
     </div>
   );
 };
 
 export default App;
-
-// import React, { useState, useEffect } from "react";
-// import socketIOClient from "socket.io-client";
-// const ENDPOINT = "http://127.0.0.1:5000";
-
-// import openSocket from "socket.io-client";
-// const socket = openSocket("http://localhost:5000");
-
-// function App() {
-//   const [response, setResponse] = useState("");
-
-//   useEffect(() => {
-//     const socket = socketIOClient(ENDPOINT);
-//     socket.on("FromAPI", (data) => {
-//       setResponse(data);
-//     });
-//   }, []);
-
-//   return (
-//     <p>
-//       It's <time dateTime={response}>{response}</time>
-//     </p>
-//   );
-// }
-
-// export default App;
