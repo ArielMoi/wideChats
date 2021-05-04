@@ -7,30 +7,30 @@ const {
   getAllUserChats,
 } = require("../utils/chat");
 
-const addChatController = async (res, req) => {
+const addChatController = async (req, res) => {
   try {
-    const chat = await addChat(req.body);
+    const chat = await addChat(req.body.name, req.body.creator);
     res.status(200).send(chat);
   } catch (e) {
     res.status(400).send(e.message);
   }
 };
 
-const getChatController = async (res, req) => {
+const getChatController = async (req, res) => {
   try {
     if (req.query.user) {
       // for specific user chats
       const userChats = await getAllUserChats(req.query.user);
       return res.status(200).send(userChats);
     }
-    const chat = await getChat(req.body._id);
+    const chat = await getChat(req.params.id);
     res.status(200).send(chat);
   } catch (e) {
     res.status(400).send(e.message);
   }
 };
 
-const getAllChatsController = async (res, req) => {
+const getAllChatsController = async (req, res) => {
   try {
     const chats = await getAllChats();
     res.status(200).send(chats);
@@ -39,7 +39,7 @@ const getAllChatsController = async (res, req) => {
   }
 };
 
-// const getAllUserChatsController = async (res, req) => {
+// const getAllUserChatsController = async (req, res) => {
 //   try {
 //     const userChats = await getAllUserChats(req.body._id);
 //     res.status(200).send(userChats);
@@ -48,9 +48,8 @@ const getAllChatsController = async (res, req) => {
 //   }
 // };
 
-module.export = {
+module.exports = {
   addChatController,
   getChatController,
   getAllChatsController,
-//   getAllUserChatsController,
 };

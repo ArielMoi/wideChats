@@ -6,25 +6,25 @@ const {
   getAllUsers,
 } = require('../utils/user')
 
-const addUserController = async (res, req) => { // post
+const addUserController = async (req, res) => { // post
     try {
-        const user = await addUser(req.body);
+        const user = await addUser(req.body.name, req.body.email);
         res.status(200).send(user)
     } catch (e){
         res.status(400).send(e.message)
     }
 }
 
-const getUserController = async (res, req) => {
+const getUserController = async (req, res) => {
     try {
-        const user = await getUser(req.body._id);
+        const user = await getUser(req.params.id);
         res.status(200).send(user)
     } catch (e){
         res.status(400).send(e.message)
     }
 }
 
-const getAllUsersController = async (res, req) => {
+const getAllUsersController = async (req, res) => {
     try {
         const users = await getAllUsers()
         res.status(200).send(users)

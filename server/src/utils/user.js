@@ -7,6 +7,7 @@ const addUser = async (name, email) => {
       email,
     });
     await user.save();
+    return user;
   } catch (e) {
     console.log(e);
   }

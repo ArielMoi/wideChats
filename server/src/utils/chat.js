@@ -7,6 +7,7 @@ const addChat = async (name, creator) => {
       creator,
     });
     await chat.save();
+    return chat;
   } catch (e) {
     console.log(e);
   }
