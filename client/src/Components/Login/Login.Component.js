@@ -7,7 +7,6 @@ const Login = () => {
                 {/* <label>room</label>
                 <input type="text" name='room' required></input> */}
                 <button type='submit'>Enter</button>
-                <button>create a new id</button>
             </form>
         </div>
     )

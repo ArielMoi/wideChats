@@ -18,7 +18,7 @@ const Chat = mongoose.model("Chat", {
       default: 'general'
   },
   creator: {
-      type: ObjectId,
+      type: String,
       required: true
   }
 });

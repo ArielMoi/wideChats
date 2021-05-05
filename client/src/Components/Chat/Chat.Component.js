@@ -3,7 +3,6 @@ import ChatMessage from "../ChatMessage/ChatMessage.Component";
 import ChatTextInput from "../ChatTextInput/ChatTextInput.Component";
 import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
-import Qs from "qs";
 import date from "date-and-time";
 
 const socket = openSocket("http://localhost:5000", {
@@ -26,14 +25,10 @@ const Chat = (props) => {
   });
 
   const sendMessage = (event) => {
-    const { username } = Qs.parse(window.location.search, {
-      // collects user name from login form
-      ignoreQueryPrefix: true,
-    });
     event.preventDefault();
     socket.emit("sendMessage", {
       text: currentMessage,
-      username,
+      username: props.username,
       time: date.format(new Date(), "DD/MM HH:mm"),
       room: props.currentRoom,
     });
