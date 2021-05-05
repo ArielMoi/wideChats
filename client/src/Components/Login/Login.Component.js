@@ -2,11 +2,11 @@ const Login = () => {
     return (
         <div>
             <form>
-                <label>username</label>
-                <input type="text" required></input>
-                <label>email</label>
-                <input type="text" required></input>
-                <button type='submit'>Login</button>
+                <label>choose username</label>
+                <input type="text" name='username' required></input>
+                {/* <label>room</label>
+                <input type="text" name='room' required></input> */}
+                <button type='submit'>Enter</button>
                 <button>create a new id</button>
             </form>
         </div>

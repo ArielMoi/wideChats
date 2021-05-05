@@ -4,22 +4,15 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import ChatShowcase from "../src/Components/ChatShowcase/ChatShowcase.Component";
-import Chat from './Components/Chat/Chat.Component'
-
-const socket = openSocket("http://localhost:5000", {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
+import Chat from "./Components/Chat/Chat.Component";
+import Login from "./Components/Login/Login.Component";
+// import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 const App = () => {
-  const [msg, setMsg] = useState("");
   const [chats, setChats] = useState([]);
-  const [chatVisibility, setChatVisibility] = useState('hidden')
-  const [messages, setMessages] = useState([])
-  const [currentChat, setCurrentChat] = useState({})
-  
+  const [chatVisibility, setChatVisibility] = useState("hidden");
+  const [currentRoom, setCurrentRoom] = useState({});
+
   // state for all messages
 
   useEffect(() => {
@@ -32,26 +25,19 @@ const App = () => {
     collectChats();
   }, []);
 
-  const sendMessage = (event) => {
-    event.preventDefault();
-    socket.emit("sendMessage", {text: msg, username: 'ariel', time: Date.now()}); // add msg to state of all messages
+  const enterChat = (room) => {
+    setChatVisibility("visible");
+    setCurrentRoom(room)
   };
 
-  const enterChat = (room) => {
-    setChatVisibility('visible')
-  }
-
- // chat will be hidden until enter
+  // chat will be hidden until enter
   return (
     <div>
+      <Login />
       {chats.map((chat) => (
-        <ChatShowcase chatName={chat[2]} /> // create a func to open chat to the correct room when "enter"
+        <ChatShowcase chatName={chat[2]} enterFunc={enterChat} /> // create a func to open chat to the correct room when "enter"
       ))}
-      < Chat visibility={'visible'} messages={messages}/>
-      <form>
-        <input type="text" onChange={(e) => setMsg(e.target.value)} />
-        <button onClick={sendMessage}>send</button>
-      </form>
+      <Chat currentRoom={currentRoom} visibility={chatVisibility}/>
     </div>
   );
 };

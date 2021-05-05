@@ -1,7 +1,7 @@
 const ChatTextInput = (props) => {
     return(<form>
-        <input type="text" />
-        <button type="submit">Send</button>
+        <input type="text" onChange={props.onChange} value={props.msgValue}/>
+        <button type="submit" onClick={props.onClick}>Send</button>
     </form>)
 }
 
