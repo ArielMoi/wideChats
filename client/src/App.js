@@ -9,6 +9,7 @@ import Login from "./Components/Login/Login.Component";
 // import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
 import Qs from "qs";
+// import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
@@ -52,8 +53,7 @@ const App = () => {
     const { data } = await axios.post("http://localhost:5000/chats/", {
       name,
       creator,
-    }); // ! don't create
-    console.log(data);
+    });
     collectChats(); // to renew chats list
     return data;
   };
@@ -62,6 +62,7 @@ const App = () => {
   return (
     <div>
       <Login />
+      {/* <LocationMessage /> */}
       <CreateRoom createRoomButton={createRoom} user={currentUser} />
       {chats.map((chat) => (
         <ChatShowcase chatName={chat[2]} enterFunc={enterChat} /> // create a func to open chat to the correct room when "enter"

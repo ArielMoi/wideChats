@@ -19,7 +19,6 @@ const Chat = (props) => {
   useEffect(() => {
     // ? have to be inside use effect or can be outside
     socket.on("message", (message) => {
-      // socket.join(message.room);
       setMessages([...messages, message]);
     });
   });
