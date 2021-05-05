@@ -4,10 +4,11 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import ChatShowcase from "../src/Components/ChatShowcase/ChatShowcase.Component";
+import Chat from './Components/Chat/Chat.Component'
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
-    origin: "http://localhost:8080",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });
@@ -15,6 +16,8 @@ const socket = openSocket("http://localhost:5000", {
 const App = () => {
   const [msg, setMsg] = useState("");
   const [chats, setChats] = useState([]);
+  
+  // state for all messages
 
   useEffect(() => {
     const collectChats = async () => {
@@ -28,14 +31,15 @@ const App = () => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-    socket.emit("sendMessage", msg);
+    socket.emit("sendMessage", msg); // add msg to state of all messages
   };
-
+ // chat will be hidden until enter
   return (
     <div>
       {chats.map((chat) => (
-        <ChatShowcase chatName={chat[2]} />
+        <ChatShowcase chatName={chat[2]} /> // create a func to open chat to the correct room when "enter"
       ))}
+      < Chat visibility={'hidden'} />
       <form>
         <input type="text" onChange={(e) => setMsg(e.target.value)} />
         <button onClick={sendMessage}>send</button>
