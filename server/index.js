@@ -58,6 +58,10 @@ io.on("connection", (socket) => {
   //   callback();
   // });
 
+  socket.on("join", room => {
+    socket.join(room);
+  })
+
   socket.on("sendMessage", (message) => {
     // {message, room}
     console.log(message);

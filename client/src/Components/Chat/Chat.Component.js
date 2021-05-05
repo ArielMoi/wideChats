@@ -14,14 +14,8 @@ const socket = openSocket("http://localhost:5000", {
 });
 
 const Chat = (props) => {
-  // chat details
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState('')
-  // logics of socket io.
-
-  // set messages and messages from App
-
-  //socket io each message added to messages
 
   useEffect(() => {
     // ? have to be inside use effect or can be outside

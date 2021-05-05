@@ -8,6 +8,13 @@ import Chat from "./Components/Chat/Chat.Component";
 import Login from "./Components/Login/Login.Component";
 // import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
+const socket = openSocket("http://localhost:5000", {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
 const App = () => {
   const [chats, setChats] = useState([]);
   const [chatVisibility, setChatVisibility] = useState("hidden");
@@ -28,6 +35,8 @@ const App = () => {
   const enterChat = (room) => {
     setChatVisibility("visible");
     setCurrentRoom(room)
+
+    socket.emit("join", room); // join user to his choice of room
   };
 
   // chat will be hidden until enter
