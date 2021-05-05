@@ -40,7 +40,7 @@ const {
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
-  
+
   // socket.on("join", (user, callback) => {
   //   socket.join(user.room);
 
@@ -60,8 +60,10 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("sendMessage", (message) => {
+    // {message, room}
     console.log(message);
 
+    io.to(room).emit("message", message);
     // io.to(user.room).emit("message", generateMessage(user.username, message));
   });
 

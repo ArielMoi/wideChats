@@ -16,6 +16,9 @@ const socket = openSocket("http://localhost:5000", {
 const App = () => {
   const [msg, setMsg] = useState("");
   const [chats, setChats] = useState([]);
+  const [chatVisibility, setChatVisibility] = useState('hidden')
+  const [messages, setMessages] = useState([])
+  const [currentChat, setCurrentChat] = useState({})
   
   // state for all messages
 
@@ -31,15 +34,20 @@ const App = () => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-    socket.emit("sendMessage", msg); // add msg to state of all messages
+    socket.emit("sendMessage", {text: msg, username: 'ariel', time: Date.now()}); // add msg to state of all messages
   };
+
+  const enterChat = (room) => {
+    setChatVisibility('visible')
+  }
+
  // chat will be hidden until enter
   return (
     <div>
       {chats.map((chat) => (
         <ChatShowcase chatName={chat[2]} /> // create a func to open chat to the correct room when "enter"
       ))}
-      < Chat visibility={'hidden'} />
+      < Chat visibility={'visible'} messages={messages}/>
       <form>
         <input type="text" onChange={(e) => setMsg(e.target.value)} />
         <button onClick={sendMessage}>send</button>
