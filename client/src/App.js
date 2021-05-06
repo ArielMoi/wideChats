@@ -9,10 +9,11 @@ import Login from "./Components/Login/Login.Component";
 // import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
 import Qs from "qs";
-import { v4 as uuid } from "uuid";
+
 import { useAuth0 } from "@auth0/auth0-react";
 // import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
-import Logout from './Components/Logout/Logout.Component'
+import Logout from "./Components/Logout/Logout.Component";
+import AllChats from './Components/AllChats/AllChats.Component'
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
@@ -27,6 +28,7 @@ const App = () => {
   const [currentRoom, setCurrentRoom] = useState({});
   const [currentUser, setCurrentUser] = useState("");
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const [createRoomDisplay, setCreateRoomDisplay] = useState('none')
 
   // state for all messages
   const collectChats = async () => {
@@ -71,14 +73,7 @@ const App = () => {
       {isAuthenticated ? <Logout /> : <Login />}
       {/* <LocationMessage /> */}
       <CreateRoom createRoomButton={createRoom} user={currentUser} />
-      {chats.map((chat) => (
-        <ChatShowcase
-          key={uuid()}
-          chatName={chat.name}
-          enterFunc={() => enterChat(chat)}
-          tag={chat.type}
-        /> // create a func to open chat to the correct room when "enter"
-      ))}
+      <AllChats chats={chats} enterChat={enterChat}/>
       <Chat
         visibility={chatVisibility}
         username={

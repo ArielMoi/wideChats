@@ -8,7 +8,7 @@ const CreateRoom = (props) => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [chatType, setChatType] = useState('')
   return (
-    <div className="create-room">
+    <div className="create-room" style={{ display: props.display }}>
       <div className="btn-create-room">
         <Button
           onClick={() => setFormVisibility("visible")}
@@ -26,16 +26,14 @@ const CreateRoom = (props) => {
           onChange={(e) => setCreatedRoomName(e.target.value)}
           value={createdRoomName}
         />
-        <br />
-        <br />
+        <hr />
         <label>Anonymous? </label>
         <input
           type="checkbox"
           onChange={() => setIsAnonymous(!isAnonymous)}
           value={isAnonymous}
         />
-        <br />
-        <br />
+        <hr />
         <label>type: </label>
         <br />
         <input
@@ -44,8 +42,7 @@ const CreateRoom = (props) => {
           onChange={(e) => setChatType(e.target.value)}
           value={chatType}
         />
-        <br />
-        <br />
+        <hr />
         <Button
           onClick={(event) => {
             event.preventDefault();

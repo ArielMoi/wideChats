@@ -1,5 +1,18 @@
 .create-room form {
   text-align: center;
+  position: fixed;
+  top: 30%;
+  left: 48%;
+  margin-top: -50px;
+  margin-left: -100px;
+  background-color: #eaeaea;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 15px #252a34;
+}
+
+.create-room form > * {
+  margin: 15px;
 }
 
 .btn-create-room {

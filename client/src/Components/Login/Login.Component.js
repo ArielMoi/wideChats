@@ -1,9 +1,16 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import Button from '../Button/Button.Component'
 
-const Login = (props) => {
+const Login = () => {
   const { loginWithRedirect } = useAuth0();
 
-  return <button onClick={() => loginWithRedirect()}>Log In</button>;
+  return (
+    <div>
+      <h3>Unregistered User</h3>
+      <p>please log in to chat away!</p>
+      <Button onClick={() => loginWithRedirect()} text='Log In' />
+    </div>
+  );
   // return (
   //     <div>
   //         <form>
