@@ -1,10 +1,12 @@
 const Chat = require("../models/chat");
 
-const addChat = async (name, creator) => {
+const addChat = async (name, creator, isAnonymous = false, type='general') => {
   try {
     const chat = new Chat({
       name,
       creator,
+      isAnonymous,
+      type,
     });
     await chat.save();
     return chat;

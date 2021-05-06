@@ -9,7 +9,12 @@ const {
 
 const addChatController = async (req, res) => {
   try {
-    const chat = await addChat(req.body.name, req.body.creator);
+    const chat = await addChat(
+      req.body.name,
+      req.body.creator,
+      req.body.isAnonymous && req.body.isAnonymous,
+      req.body.type && req.body.type,
+    );
     res.status(200).send(chat);
   } catch (e) {
     res.status(400).send(e.message);

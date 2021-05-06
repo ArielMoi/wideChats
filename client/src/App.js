@@ -31,10 +31,6 @@ const App = () => {
     const { data } = await axios.get("http://localhost:5000/chats/");
     data.map((chat) => arrayOfChats.push(chat));
     setChats(arrayOfChats);
-    // const arrayOfChats = [];
-    // const { data } = await axios.get("http://localhost:5000/chats/");
-    // data.map((chat) => arrayOfChats.push(Object.values(chat)));
-    // setChats(arrayOfChats);
   };
 
   useEffect(() => {
@@ -54,10 +50,12 @@ const App = () => {
     socket.emit("join", chat.name); // join user to his choice of room
   };
 
-  const createRoom = async (name, creator) => {
+  const createRoom = async (name, creator, isAnonymous) => {
+    console.log('anonimu? ' , isAnonymous);
     const { data } = await axios.post("http://localhost:5000/chats/", {
       name,
       creator,
+      isAnonymous,
     });
     collectChats(); // to renew chats list
     return data;
@@ -71,7 +69,6 @@ const App = () => {
       <CreateRoom createRoomButton={createRoom} user={currentUser} />
       {chats.map(
         (chat) => (
-          console.log(chat),
           (
             <ChatShowcase
               key={uuid()}
