@@ -64,7 +64,6 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", (message) => {
     // {message, room}
-    console.log(message);
     socket.join(message.room);
     io.to(message.room).emit("message", message);
     // io.to(user.room).emit("message", generateMessage(user.username, message));

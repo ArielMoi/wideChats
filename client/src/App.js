@@ -9,6 +9,7 @@ import Login from "./Components/Login/Login.Component";
 // import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
 import Qs from "qs";
+import { v4 as uuid } from "uuid";
 // import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
 
 const socket = openSocket("http://localhost:5000", {
@@ -28,8 +29,12 @@ const App = () => {
   const collectChats = async () => {
     const arrayOfChats = [];
     const { data } = await axios.get("http://localhost:5000/chats/");
-    data.map((chat) => arrayOfChats.push(Object.values(chat)));
+    data.map((chat) => arrayOfChats.push(chat));
     setChats(arrayOfChats);
+    // const arrayOfChats = [];
+    // const { data } = await axios.get("http://localhost:5000/chats/");
+    // data.map((chat) => arrayOfChats.push(Object.values(chat)));
+    // setChats(arrayOfChats);
   };
 
   useEffect(() => {
@@ -42,11 +47,11 @@ const App = () => {
     setCurrentUser(username);
   }, []);
 
-  const enterChat = (room) => {
+  const enterChat = (chat) => {
     setChatVisibility("visible");
-    setCurrentRoom(room);
+    setCurrentRoom(chat);
 
-    socket.emit("join", room); // join user to his choice of room
+    socket.emit("join", chat.name); // join user to his choice of room
   };
 
   const createRoom = async (name, creator) => {
@@ -64,13 +69,22 @@ const App = () => {
       <Login />
       {/* <LocationMessage /> */}
       <CreateRoom createRoomButton={createRoom} user={currentUser} />
-      {chats.map((chat) => (
-        <ChatShowcase chatName={chat[2]} enterFunc={enterChat} /> // create a func to open chat to the correct room when "enter"
-      ))}
+      {chats.map(
+        (chat) => (
+          console.log(chat),
+          (
+            <ChatShowcase
+              key={uuid()}
+              chatName={chat.name}
+              enterFunc={() => enterChat(chat)}
+            />
+          ) // create a func to open chat to the correct room when "enter"
+        )
+      )}
       <Chat
-        currentRoom={currentRoom}
         visibility={chatVisibility}
-        username={currentUser}
+        username={currentRoom.isAnonymous ? 'Anonymous' : currentUser}
+        room={currentRoom}
       />
     </div>
   );

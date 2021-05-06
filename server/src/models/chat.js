@@ -9,17 +9,21 @@ const Chat = mongoose.model("Chat", {
   participants: [
     {
       participant: {
-          type: ObjectId
-      }
+        type: ObjectId,
+      },
     },
   ],
   type: {
-      type: String,
-      default: 'general'
+    type: String,
+    default: "general",
   },
   creator: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
+  },
+  isAnonymous: {
+    type: Boolean,
+    default: false,
   }
 });
 
