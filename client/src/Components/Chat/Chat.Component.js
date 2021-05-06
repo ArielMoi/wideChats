@@ -1,4 +1,3 @@
-// import { protocol } from "socket.io-parser";
 import ChatMessage from "../ChatMessage/ChatMessage.Component";
 import ChatTextInput from "../ChatTextInput/ChatTextInput.Component";
 import { useState, useEffect } from "react";
