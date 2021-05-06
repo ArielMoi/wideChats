@@ -1,0 +1,9 @@
+.chat-showcase {
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 2% 20%;
+  border: 1px solid #ff2e63;
+  border-radius: 5px;
+  color: #252a34;
+}

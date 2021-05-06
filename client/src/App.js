@@ -50,12 +50,12 @@ const App = () => {
     socket.emit("join", chat.name); // join user to his choice of room
   };
 
-  const createRoom = async (name, creator, isAnonymous) => {
-    console.log('anonimu? ' , isAnonymous);
+  const createRoom = async (name, creator, isAnonymous, type='general') => {
     const { data } = await axios.post("http://localhost:5000/chats/", {
       name,
       creator,
       isAnonymous,
+      type,
     });
     collectChats(); // to renew chats list
     return data;
@@ -74,6 +74,7 @@ const App = () => {
               key={uuid()}
               chatName={chat.name}
               enterFunc={() => enterChat(chat)}
+              tag={chat.type}
             />
           ) // create a func to open chat to the correct room when "enter"
         )
