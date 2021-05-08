@@ -47,7 +47,7 @@ const Chat = (props) => {
   };
 
   return (
-    <div className="chat-window" style={{ visibility: props.visibility }}>
+    <div className="chat-window">
       {messages &&
         messages.map((message) => (
           <ChatMessage

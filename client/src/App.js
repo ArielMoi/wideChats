@@ -6,15 +6,17 @@ import openSocket from "socket.io-client";
 import ChatShowcase from "../src/Components/ChatShowcase/ChatShowcase.Component";
 import Chat from "./Components/Chat/Chat.Component";
 import Login from "./Components/Login/Login.Component";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, useHistory, Route, Link } from "react-router-dom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
 import Qs from "qs";
-import Button from './Components/Button/Button.Component'
+import Button from "./Components/Button/Button.Component";
+import Navbar from './Components/Navbar/Navbar.Component'
 
 import { useAuth0 } from "@auth0/auth0-react";
 // import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
 import Logout from "./Components/Logout/Logout.Component";
-import AllChats from './Components/AllChats/AllChats.Component'
+import AllChats from "./Components/AllChats/AllChats.Component";
+import UserNotLogged from "./Components/UserNotLogged/UserNotLogged.Component";
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
@@ -25,11 +27,8 @@ const socket = openSocket("http://localhost:5000", {
 
 const App = () => {
   const [chats, setChats] = useState([]);
-  const [chatVisibility, setChatVisibility] = useState("hidden");
   const [currentRoom, setCurrentRoom] = useState({});
-  const [currentUser, setCurrentUser] = useState("");
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const [createRoomDisplay, setCreateRoomDisplay] = useState('none')
 
   // state for all messages
   const collectChats = async () => {
@@ -41,56 +40,65 @@ const App = () => {
 
   useEffect(() => {
     collectChats();
-    const { username } = Qs.parse(window.location.search, {
-      // collects user name from login form
-      ignoreQueryPrefix: true,
-    });
-    setCurrentUser(username);
   }, []);
 
   const enterChat = (chat) => {
-    console.log(user);
-    isAuthenticated && console.log(user);
-    setChatVisibility("visible");
     setCurrentRoom(chat);
-
     socket.emit("join", chat.name); // join user to his choice of room
   };
 
   const createRoom = async (name, creator, isAnonymous, type = "general") => {
+    console.log('createee');
     const { data } = await axios.post("http://localhost:5000/chats/", {
       name,
       creator,
       isAnonymous,
       type,
     });
+    console.log("roomS");
     collectChats(); // to renew chats list
     return data;
   };
 
-  // chat will be hidden until enter
   return (
     <div>
-      <Link to="/create room" className="btn-create">
-        < Button text='Create Rooom' />
-      </Link>
-      {isAuthenticated ? (
-        <Logout />
-      ) : (
-        <Link to="/login">
-          <button>Login</button>
-        </Link>
-      )}
-      {/* <LocationMessage /> */}
-      <CreateRoom createRoomButton={createRoom} user={currentUser} />
-      <AllChats chats={chats} enterChat={enterChat} />
-      <Chat
-        visibility={chatVisibility}
-        username={
-          currentRoom.isAnonymous ? "Anonymous" : user ? user.nickname : ""
-        }
-        room={currentRoom}
-      />
+      <BrowserRouter>
+        <Route path="/">
+          <Navbar isAuthenticated={isAuthenticated} />
+        </Route>
+        <Route path="/" exact>
+          <Link to="/create-room" className="btn-create">
+            <Button text="Create Rooom" />
+          </Link>
+          <AllChats chats={chats} enterChat={enterChat} />
+        </Route>
+        <Route path="/create-room" exact>
+          {isAuthenticated ? (
+            <CreateRoom
+              createRoomButton={createRoom}
+              user={user ? user.nickname : ""}
+            />
+          ) : (
+            <UserNotLogged />
+          )}
+        </Route>
+        <Route path="/chat" exact>
+          {isAuthenticated ? (
+            <Chat
+              username={
+                currentRoom.isAnonymous
+                  ? "Anonymous"
+                  : user
+                  ? user.nickname
+                  : ""
+              }
+              room={currentRoom}
+            />
+          ) : (
+            <UserNotLogged />
+          )}
+        </Route>
+      </BrowserRouter>
     </div>
   );
 };

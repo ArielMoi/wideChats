@@ -1,22 +1,16 @@
 import Button from "../Button/Button.Component";
 import { useState } from "react";
 import './CreateRoom.css'
+import { useHistory } from "react-router-dom";
 
 const CreateRoom = (props) => {
-  const [formVisibility, setFormVisibility] = useState("hidden");
   const [createdRoomName, setCreatedRoomName] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [chatType, setChatType] = useState('')
+  const history = useHistory();
   return (
     <div className="create-room" style={{ display: props.display }}>
-      <div className="btn-create-room">
-        <Button
-          onClick={() => setFormVisibility("visible")}
-          text="create room"
-        />
-      </div>
-      <br />
-      <form style={{ visibility: formVisibility }}>
+      <form>
         <br />
         <label>room name:</label>
         <br />
@@ -46,13 +40,13 @@ const CreateRoom = (props) => {
         <Button
           onClick={(event) => {
             event.preventDefault();
-            setFormVisibility("hidden");
             props.createRoomButton(
               createdRoomName,
               props.user,
               isAnonymous,
               chatType && chatType
             );
+            history.push("/");
           }}
           text="create"
         />

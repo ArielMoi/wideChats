@@ -1,10 +1,15 @@
 .chat-showcase {
   padding: 5px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
   margin: 2% 20%;
   border: 1px solid #ff2e63;
   border-radius: 5px;
-  color: #252a34;
+  color: #eaeaea;
   box-shadow: 0 0 5px #252a34;
+}
+
+.chat-showcase h4,
+.chat-showcase h5 {
+  margin-top: 3px;
 }

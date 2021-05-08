@@ -9,6 +9,7 @@
   padding: 1rem;
   border-radius: 5px;
   box-shadow: 0 0 15px #252a34;
+  color: #252a34;
 }
 
 .create-room form > * {
@@ -18,4 +19,9 @@
 .btn-create-room {
   float: right;
   margin-right: 10px;
+}
+
+.create-room button:hover {
+  color: #252a34;
+  border: 1px solid #252a34;
 }

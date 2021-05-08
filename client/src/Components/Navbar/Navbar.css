@@ -1,0 +1,21 @@
+.navbar img {
+  width: 8vh;
+  cursor: pointer;
+}
+
+.navbar ul {
+  list-style: none;
+}
+
+.navbar .log {
+  float: right;
+  position: absolute;
+  right: 2px;
+  top: 1.5vh;
+}
+
+.navbar {
+  background-color: #08d9d6;
+  height: 7vh;
+  margin-bottom: 2vh;
+}
