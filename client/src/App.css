@@ -7,3 +7,7 @@ body,
 html {
   background: #eaeaea;
 }
+
+.btn-create {
+  float: right;
+}

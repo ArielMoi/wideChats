@@ -6,9 +6,10 @@ import openSocket from "socket.io-client";
 import ChatShowcase from "../src/Components/ChatShowcase/ChatShowcase.Component";
 import Chat from "./Components/Chat/Chat.Component";
 import Login from "./Components/Login/Login.Component";
-// import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
 import Qs from "qs";
+import Button from './Components/Button/Button.Component'
 
 import { useAuth0 } from "@auth0/auth0-react";
 // import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
@@ -70,10 +71,19 @@ const App = () => {
   // chat will be hidden until enter
   return (
     <div>
-      {isAuthenticated ? <Logout /> : <Login />}
+      <Link to="/create room" className="btn-create">
+        < Button text='Create Rooom' />
+      </Link>
+      {isAuthenticated ? (
+        <Logout />
+      ) : (
+        <Link to="/login">
+          <button>Login</button>
+        </Link>
+      )}
       {/* <LocationMessage /> */}
       <CreateRoom createRoomButton={createRoom} user={currentUser} />
-      <AllChats chats={chats} enterChat={enterChat}/>
+      <AllChats chats={chats} enterChat={enterChat} />
       <Chat
         visibility={chatVisibility}
         username={
