@@ -45,14 +45,12 @@ const App = () => {
   };
 
   const createRoom = async (name, creator, isAnonymous, type = "general") => {
-    console.log('createee');
     const { data } = await axios.post("http://localhost:5000/chats/", {
       name,
       creator,
       isAnonymous,
       type,
     });
-    console.log("roomS");
     collectChats(); // to renew chats list
     return data;
   };
@@ -67,7 +65,7 @@ const App = () => {
           <Link to="/create-room" className="btn-create">
             <Button text="Create Rooom" />
           </Link>
-          <AllChats chats={chats} enterChat={enterChat} />
+          <AllChats chats={chats} enterChat={enterChat} setChats={setChats}/>
         </Route>
         <Route path="/create-room" exact>
           {isAuthenticated ? (

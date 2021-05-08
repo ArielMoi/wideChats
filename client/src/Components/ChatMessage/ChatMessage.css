@@ -1,0 +1,13 @@
+.msg .text {
+  border: 1px solid #252a34;
+  width: max-content;
+  border-radius: 15px;
+  padding: 5px 15px;
+  margin: 5px 2px;
+  max-width: 70vw;
+  text-align: left;
+}
+
+.msg {
+  margin: 10px 2px;
+}

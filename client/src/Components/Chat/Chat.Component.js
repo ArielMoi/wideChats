@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import date from "date-and-time";
 import { v4 as uuid } from "uuid";
+import "./Chat.css";
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
@@ -15,21 +16,21 @@ const socket = openSocket("http://localhost:5000", {
 const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
-  const [currentRoom, setCurrentRoom] = useState('');
+  const [currentRoom, setCurrentRoom] = useState("");
 
   socket.on("message", (message) => {
     setMessages([...messages, message]);
   });
 
   useEffect(() => {
-    if (currentRoom !== props.room.name){
-      console.log('room change');
-      setCurrentRoom(props.room)
+    if (currentRoom !== props.room.name) {
+      console.log("room change");
+      setCurrentRoom(props.room);
       setMessages([
         {
           username: "Admin",
           text: `you entered room - ${props.room.name}`,
-          time: '',
+          time: "",
         },
       ]);
     }
@@ -45,6 +46,14 @@ const Chat = (props) => {
     });
     setCurrentMessage("");
   };
+
+  useEffect(() => {
+    window.scroll({
+      top: document.body.offsetHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  });
 
   return (
     <div className="chat-window">

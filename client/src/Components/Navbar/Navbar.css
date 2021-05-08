@@ -1,21 +1,25 @@
 .navbar img {
-  width: 8vh;
+  width: 7vh;
   cursor: pointer;
 }
 
 .navbar ul {
   list-style: none;
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbar .log {
   float: right;
-  position: absolute;
-  right: 2px;
-  top: 1.5vh;
+  margin-right: 2vw;
+  margin-top: 1vh;
+  /* top: 1.5vh; */
 }
 
 .navbar {
   background-color: #08d9d6;
-  height: 7vh;
-  margin-bottom: 2vh;
+  height: 6vh;
+  position: fixed;
+  width: 100vw;
+  top: 0;
 }

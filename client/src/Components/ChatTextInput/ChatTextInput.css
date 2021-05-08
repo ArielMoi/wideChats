@@ -1,0 +1,26 @@
+.ChatTextInput {
+  /* position: absolute; */
+  position: fixed;
+  bottom: 0;
+  background-color: #252a34;
+  padding-bottom: 5vh;
+  padding-top: 2vh;
+  z-index: 2;
+}
+
+.ChatTextInput input {
+  width: 65.7vw;
+}
+
+.ChatTextInput button {
+  background: transparent;
+  color: #ff2e63;
+  border: 1px solid #ff2e63;
+  padding: 2px 6px;
+}
+
+.ChatTextInput button:hover {
+  cursor: pointer;
+  color: #08d9d6;
+  border: 1px solid #08d9d6;
+}

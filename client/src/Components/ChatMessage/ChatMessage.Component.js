@@ -1,8 +1,10 @@
+import './ChatMessage.css'
+
 const ChatMessage = (props) => {
     return (
-        <div>
+        <div className='msg'>
             <p style={{fontSize:"0.8rem"}}><b className='username'>{props.username} </b> {props.time}</p>
-            <p>{props.text}</p>
+            <p className='text'>{props.text}</p>
         </div>)
 } 
 
