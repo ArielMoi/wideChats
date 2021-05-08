@@ -3,24 +3,21 @@ import axios from "axios";
 import "./App.css";
 import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
-import ChatShowcase from "../src/Components/ChatShowcase/ChatShowcase.Component";
 import Chat from "./Components/Chat/Chat.Component";
-import Login from "./Components/Login/Login.Component";
-import { BrowserRouter, useHistory, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
-import Qs from "qs";
 import Button from "./Components/Button/Button.Component";
 import Navbar from './Components/Navbar/Navbar.Component'
 
 import { useAuth0 } from "@auth0/auth0-react";
 // import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
-import Logout from "./Components/Logout/Logout.Component";
 import AllChats from "./Components/AllChats/AllChats.Component";
 import UserNotLogged from "./Components/UserNotLogged/UserNotLogged.Component";
+import currentOrigin from './cors' // for dev or production
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
-    origin: "http://localhost:3000",
+    origin: currentOrigin,
     methods: ["GET", "POST"],
   },
 });
