@@ -78,7 +78,7 @@ const App = () => {
           )}
         </Route>
         <Route path="/chat" exact>
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? ( */}
             <Chat
               username={
                 currentRoom.isAnonymous
@@ -89,9 +89,9 @@ const App = () => {
               }
               room={currentRoom}
             />
-          ) : (
+          {/* ) : (
             <UserNotLogged />
-          )}
+          )} */}
         </Route>
       </BrowserRouter>
     </div>

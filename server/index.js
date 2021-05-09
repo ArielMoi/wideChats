@@ -63,22 +63,13 @@ io.on("connection", (socket) => {
   })
 
   socket.on("sendMessage", (message) => {
-    // {message, room}
     socket.join(message.room);
     io.to(message.room).emit("message", message);
-    // io.to(user.room).emit("message", generateMessage(user.username, message));
   });
 
-  // socket.on("sendLocation", ({ coords, user }, callback) => {
-  //   io.to(user.room).emit(
-  //     "locationMessage",
-  //     generateLocationMessage(
-  //       user.username,
-  //       `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
-  //     )
-  //   );
-  //   callback();
-  // });
+  socket.on("sendLocation", (message) => {
+    io.to(message.room).emit("locationMessage", message);
+  });
 
   // socket.on("disconnect", () => {
   //   io.to(user.room).emit(
