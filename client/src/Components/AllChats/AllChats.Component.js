@@ -14,8 +14,6 @@ const AllChats = ({ chats, enterChat, setChats }) => {
     input !== "" ? setTempChats(a) : setTempChats(chats);
   };
 
-
-
   return (
     <div className="chats-showcase">
       <div className="headers">

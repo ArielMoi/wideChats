@@ -13,11 +13,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 // import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
 import AllChats from "./Components/AllChats/AllChats.Component";
 import UserNotLogged from "./Components/UserNotLogged/UserNotLogged.Component";
-import currentOrigin from './cors' // for dev or production
+import { origin, socketUri } from "./cors"; // for dev or production
 
 const socket = openSocket("http://localhost:5000", {
   cors: {
-    origin: currentOrigin,
+    origin: origin,
     methods: ["GET", "POST"],
   },
 });

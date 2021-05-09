@@ -6,11 +6,11 @@ import openSocket from "socket.io-client";
 import date from "date-and-time";
 import { v4 as uuid } from "uuid";
 import "./Chat.css";
-import currentOrigin from '../../cors' // for dev or production
+import { origin, socketUri } from "../../cors"; // for dev or production
 
-const socket = openSocket("http://localhost:5000", {
+const socket = openSocket(socketUri, {
   cors: {
-    origin: currentOrigin,
+    origin: origin,
     methods: ["GET", "POST"],
   },
 });
