@@ -33,10 +33,7 @@ const User = mongoose.model("User", {
         type: String, // name of chat (room for socket io)
       },
     },
-  ],
-  password: {
-    type: String,
-  },
+  ]
 });
 
 module.exports = User;

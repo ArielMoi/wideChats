@@ -34,6 +34,17 @@ const AllChats = ({ chats, enterChat, setChats }) => {
             tag={chat.type}
           />
         ))}
+      {chats.map((chat) => (
+          <ChatShowcase
+            key={uuid()}
+            chatName={chat.name}
+            enterFunc={() => {
+              enterChat(chat);
+              history.push("/chat");
+            }}
+            tag={chat.type}
+          />
+        ))}
     </div>
   );
 };

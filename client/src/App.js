@@ -10,12 +10,11 @@ import Button from "./Components/Button/Button.Component";
 import Navbar from './Components/Navbar/Navbar.Component'
 
 import { useAuth0 } from "@auth0/auth0-react";
-// import LocationMessage from './Components/LocationMessage/LocationMessage.Component'
 import AllChats from "./Components/AllChats/AllChats.Component";
 import UserNotLogged from "./Components/UserNotLogged/UserNotLogged.Component";
 import { origin, socketUri } from "./cors"; // for dev or production
 
-const socket = openSocket("http://localhost:5000", {
+const socket = openSocket(origin, {
   cors: {
     origin: origin,
     methods: ["GET", "POST"],
@@ -26,11 +25,12 @@ const App = () => {
   const [chats, setChats] = useState([]);
   const [currentRoom, setCurrentRoom] = useState({});
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const [profileExists, setProfileExists] = useState(false)
 
   // state for all messages
   const collectChats = async () => {
     const arrayOfChats = [];
-    const { data } = await axios.get("http://localhost:5000/chats/");
+    const { data } = await axios.get(`${origin}/chats/`);
     data.map((chat) => arrayOfChats.push(chat));
     setChats(arrayOfChats);
   };
@@ -39,13 +39,22 @@ const App = () => {
     collectChats();
   }, []);
 
+  useEffect(() => {
+    if (isAuthenticated && !profileExists){
+      createProfile(user);
+      console.log(user);
+      setProfileExists(true)
+    }
+  });
+
   const enterChat = (chat) => {
+    console.log(user);
     setCurrentRoom(chat);
     socket.emit("join", chat.name); // join user to his choice of room
   };
 
   const createRoom = async (name, creator, isAnonymous, type = "general") => {
-    const { data } = await axios.post("http://localhost:5000/chats/", {
+    const { data } = await axios.post(`${origin}/chats/`, {
       name,
       creator,
       isAnonymous,
@@ -54,6 +63,15 @@ const App = () => {
     collectChats(); // to renew chats list
     return data;
   };
+
+  const createProfile = async (user) => {
+    const profile = await axios.post(`${origin}/users/`, {
+      name: user.nickname,
+      email: user.email
+    });
+
+    return profile;
+  }
 
   return (
     <div>
