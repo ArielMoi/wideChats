@@ -40,10 +40,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated && localStorage.get('profile')){
-      createProfile(user).then(profile => console.log(profile))
-      setProfileExists(true)
-    }
+    // if (isAuthenticated && localStorage.get('profile')){
+    //   createProfile(user).then(profile => console.log(profile))
+    //   setProfileExists(true)
+    // }
   });
 
   const enterChat = (chat) => {
