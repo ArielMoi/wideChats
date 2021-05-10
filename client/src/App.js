@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import "./App.css";
 import { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
@@ -13,6 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AllChats from "./Components/AllChats/AllChats.Component";
 import UserNotLogged from "./Components/UserNotLogged/UserNotLogged.Component";
 import { origin, socketUri } from "./cors"; // for dev or production
+import API from './API'
 
 const socket = openSocket(origin, {
   cors: {
@@ -30,7 +30,7 @@ const App = () => {
   // state for all messages
   const collectChats = async () => {
     const arrayOfChats = [];
-    const { data } = await axios.get(`${origin}/chats/`);
+    const { data } = await API.get(`/chats/`);
     data.map((chat) => arrayOfChats.push(chat));
     setChats(arrayOfChats);
   };
@@ -53,7 +53,7 @@ const App = () => {
   };
 
   const createRoom = async (name, creator, isAnonymous, type = "general") => {
-    const { data } = await axios.post(`${origin}/chats/`, {
+    const { data } = await API.post(`/chats/`, {
       name,
       creator,
       isAnonymous,
@@ -64,7 +64,7 @@ const App = () => {
   };
 
   const createProfile = async (user) => {
-    const profile = await axios.post(`${origin}/users/`, {
+    const profile = await API.post(`/users/`, {
       name: user.nickname,
       email: user.email
     });
