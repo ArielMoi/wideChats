@@ -13,20 +13,34 @@ const addUser = async (name, email) => {
   }
 };
 
-const getUser = async (id) => {
-    return await User.findById(id)
+const getUser = async (name) => {
+    return await User.find({name})
 }
 
 const getAllUsers = async () => {
     return await User.find({})
 }
 
-// getUser("608fdfc61adbc95b2cedbfca").then(user => console.log(user))
-// getAllUsers().then(users => console.log(users))
-// addUser('ariel', 'ariel@gmail.com')
+const addToUserFav = async (userName, chat) => {
+  return await User.findOneAndUpdate(
+    { name: userName },
+    { $push: { favoriteChats: chat } },
+    { new: true }
+  );
+}
+
+const addToUserCreated = async (userName, chat) => {
+  return await User.findOneAndUpdate(
+    { name: userName },
+    { $push: { createdChats: chat } },
+    { new: true }
+  );
+}
 
 module.exports = {
-    addUser,
-    getUser,
-    getAllUsers,
-}
+  addUser,
+  getUser,
+  getAllUsers,
+  addToUserFav,
+  addToUserCreated,
+};

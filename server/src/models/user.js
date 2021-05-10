@@ -20,20 +20,12 @@ const User = mongoose.model("User", {
     type: Date,
     default: Date.now(),
   },
-  createdChats: [
-    {
-      chat: {
-        type: String, // name of chat (room for socket io)
-      },
-    },
-  ],
-  joinedChats: [
-    {
-      chat: {
-        type: String, // name of chat (room for socket io)
-      },
-    },
-  ]
+  createdChats: {
+    type: Array
+  }, 
+  favoriteChats: {
+    type: Array
+  }
 });
 
 module.exports = User;

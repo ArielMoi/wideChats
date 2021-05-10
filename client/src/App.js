@@ -40,10 +40,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // if (isAuthenticated && localStorage.get('profile')){
-    //   createProfile(user).then(profile => console.log(profile))
-    //   setProfileExists(true)
-    // }
+    if (isAuthenticated && !profileExists){
+      createProfile(user).then(profile => console.log(profile))
+      setProfileExists(true)
+    }
   });
 
   const enterChat = (chat) => {
@@ -70,6 +70,10 @@ const App = () => {
     });
 
     return profile;
+  }
+
+  const addToFav = (user, chat) => {
+    await API.post(`/users/${user}/${chat}`)
   }
 
   return (
