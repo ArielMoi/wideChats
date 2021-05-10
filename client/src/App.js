@@ -40,9 +40,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated && !profileExists){
-      createProfile(user);
-      console.log(user);
+    if (isAuthenticated && localStorage.get('profile')){
+      createProfile(user).then(profile => console.log(profile))
       setProfileExists(true)
     }
   });
@@ -81,7 +80,7 @@ const App = () => {
         </Route>
         <Route path="/" exact>
           <Link to="/create-room" className="btn-create">
-            <Button text="Create Rooom" />
+            <Button text="Create Room" />
           </Link>
           <AllChats chats={chats} enterChat={enterChat} setChats={setChats}/>
         </Route>

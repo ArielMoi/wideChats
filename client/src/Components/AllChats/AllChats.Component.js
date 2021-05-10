@@ -4,14 +4,14 @@ import "./AllChats.css";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
-const AllChats = ({ chats, enterChat, setChats }) => {
+const AllChats = ({ chats, enterChat }) => {
   const history = useHistory();
-  const [tempChats, setTempChats] = useState(chats);
+  const [tempChats, setTempChats] = useState([]);
   const [searchByType, setSearchByType] = useState(false)
 
   const search = (input) => {
     const a = searchByType ? chats.filter((chat) => chat.type.startsWith(input)) : chats.filter((chat) => chat.name.startsWith(input));
-    input !== "" ? setTempChats(a) : setTempChats(chats);
+    input !== "" ? setTempChats(a) : setTempChats([]);
   };
 
   return (
@@ -20,7 +20,7 @@ const AllChats = ({ chats, enterChat, setChats }) => {
         <h1>Chats</h1>
         <input type="text" onChange={(event) => search(event.target.value)} />
         <i className="fas fa-search"></i>
-        < input type='checkbox' onChange={() => setSearchByType(!searchByType)} value={searchByType}/>
+        <input type='checkbox' onChange={() => setSearchByType(!searchByType)} value={searchByType}/>
         <label> by type</label>
       </div>
       {tempChats.map((chat) => (
