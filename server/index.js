@@ -15,7 +15,6 @@ const io = socketIo(server, {
   },
 });
 
-
 //routers
 const usersRouter = require("./src/routers/user");
 const chatsRouter = require("./src/routers/chat");
@@ -32,31 +31,8 @@ app.use(chatsRouter);
 
 const PORT = process.env.PORT || 5000;
 
-const {
-  generateMessage,
-  generateLocationMessage,
-} = require("./src/utils/messages"); // messages utils
-
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
-
-  // socket.on("join", (user, callback) => {
-  //   socket.join(user.room);
-
-  //   socket.emit("message", generateMessage("Admin", "Welcome!"));
-  //   socket.broadcast
-  //     .to(user.room)
-  //     .emit(
-  //       "message",
-  //       generateMessage("Admin", `${user.username} has joined!`)
-  //     );
-  //   io.to(user.room).emit("roomData", {
-  //     room: user.room,
-  //     users: getUsersInRoom(user.room),
-  //   });
-
-  //   callback();
-  // });
 
   socket.on("join", room => {
     socket.join(room);
@@ -70,17 +46,6 @@ io.on("connection", (socket) => {
   socket.on("sendLocation", (message) => {
     io.to(message.room).emit("locationMessage", message);
   });
-
-  // socket.on("disconnect", () => {
-  //   io.to(user.room).emit(
-  //     "message",
-  //     generateMessage("Admin", `${user.username} has left!`)
-  //   );
-  //   io.to(user.room).emit("roomData", {
-  //     room: user.room,
-  //     users: getUsersInRoom(user.room),
-  //   });
-  // });
 });
 
 server.listen(PORT, () => console.log(`Server running on port: ${PORT}`));

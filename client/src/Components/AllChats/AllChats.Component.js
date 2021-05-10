@@ -4,7 +4,7 @@ import "./AllChats.css";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
-const AllChats = ({ chats, enterChat }) => {
+const AllChats = ({ chats, enterChat, addToFav }) => {
   const history = useHistory();
   const [tempChats, setTempChats] = useState([]);
   const [searchByType, setSearchByType] = useState(false)
@@ -20,31 +20,36 @@ const AllChats = ({ chats, enterChat }) => {
         <h1>Chats</h1>
         <input type="text" onChange={(event) => search(event.target.value)} />
         <i className="fas fa-search"></i>
-        <input type='checkbox' onChange={() => setSearchByType(!searchByType)} value={searchByType}/>
+        <input
+          type="checkbox"
+          onChange={() => setSearchByType(!searchByType)}
+          value={searchByType}
+        />
         <label> by type</label>
       </div>
       {tempChats.map((chat) => (
-          <ChatShowcase
-            key={uuid()}
-            chatName={chat.name}
-            enterFunc={() => {
-              enterChat(chat);
-              history.push("/chat");
-            }}
-            tag={chat.type}
-          />
-        ))}
+        <ChatShowcase
+          key={uuid()}
+          chatName={chat.name}
+          enterFunc={() => {
+            enterChat(chat);
+            history.push("/chat");
+          }}
+          tag={chat.type}
+        />
+      ))}
       {chats.map((chat) => (
-          <ChatShowcase
-            key={uuid()}
-            chatName={chat.name}
-            enterFunc={() => {
-              enterChat(chat);
-              history.push("/chat");
-            }}
-            tag={chat.type}
-          />
-        ))}
+        <ChatShowcase
+          key={uuid()}
+          chatName={chat.name}
+          enterFunc={() => {
+            enterChat(chat);
+            history.push("/chat");
+          }}
+          addToFav={addToFav}
+          tag={chat.type}
+        />
+      ))}
     </div>
   );
 };
