@@ -3,27 +3,27 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useHistory } from "react-router-dom";
 
-const FavChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
-  const [favChats, setFavChats] = useState([]);
+const CreatedChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
+  const [createdChats, setCreatedChats] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
-    const collectFavChats = async () => {
+    const collectCreatedChats = async () => {
       const arrayOfChats = [];
       chats.forEach(
         (chat) =>
-          user.favoriteChats.includes(chat.name) && arrayOfChats.push(chat)
+          user.createdChats.includes(chat.name) && arrayOfChats.push(chat)
       );
-      setFavChats(arrayOfChats);
+      setCreatedChats(arrayOfChats);
     };
 
-    collectFavChats();
+    collectCreatedChats();
   }, []);
 
   return (
     <div>
-      <h1>Favorite Chats</h1>
-      {favChats.map((chat) => (
+      <h1>Created Chats</h1>
+      {createdChats.map((chat) => (
         <ChatShowcase
           key={uuid()}
           chatName={chat.name}
@@ -39,4 +39,4 @@ const FavChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
   );
 };
 
-export default FavChats;
+export default CreatedChats;

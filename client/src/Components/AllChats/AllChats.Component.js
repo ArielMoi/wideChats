@@ -35,6 +35,7 @@ const AllChats = ({ chats, enterChat, addToFav }) => {
             enterChat(chat);
             history.push("/chat");
           }}
+          addToFav={addToFav}
           tag={chat.type}
         />
       ))}

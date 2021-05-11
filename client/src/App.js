@@ -8,6 +8,7 @@ import CreateRoom from "./Components/CreateRoom/CreateRoom.Component";
 import Button from "./Components/Button/Button.Component";
 import Navbar from "./Components/Navbar/Navbar.Component";
 import FavChats from "./Components/FavChats/FavChats.Component";
+import CreatedChats from "./Components/CreatedChats/CreatedChats.Component";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import AllChats from "./Components/AllChats/AllChats.Component";
@@ -15,7 +16,7 @@ import UserNotLogged from "./Components/UserNotLogged/UserNotLogged.Component";
 import { origin, socketUri } from "./cors"; // for dev or production
 import API from "./API";
 
-const socket = openSocket(origin, {
+const socket = openSocket(socketUri, {
   cors: {
     origin: origin,
     methods: ["GET", "POST"],
@@ -41,29 +42,29 @@ const App = () => {
   }, []);
 
   const checkIfProfileExists = async (username) => {
-    const {data} = await API.get(`/users/${user.nickname}`)
-    return data !== ''
-  }
+    const { data } = await API.get(`/users/${user.nickname}`);
+    return data !== "";
+  };
 
-  const CheckAndCreateProfile = async () => { // checks if profile (user data in db) exists. (if first login). pull or creates data.
+  const CheckAndCreateProfile = async () => {
+    // checks if profile (user data in db) exists. (if first login). pull or creates data.
     const profileExists = await checkIfProfileExists();
     if (!profileExists) {
       const { data } = await createProfile(user);
-      setUserData(data.name);
-    }else {
-      const {data} = await API.get(`/users/${user.nickname}`)
-      setUserData(data.name);
+      setUserData(data[0]);
+    } else {
+      const { data } = await API.get(`/users/${user.nickname}`);
+      setUserData(data[0]);
     }
-  }
+  };
 
   useEffect(() => {
-    if (isAuthenticated){
+    if (isAuthenticated && !userData) {
       CheckAndCreateProfile();
     }
   });
 
   const enterChat = (chat) => {
-    console.log(user);
     setCurrentRoom(chat);
     socket.emit("join", chat.name); // join user to his choice of room
   };
@@ -102,7 +103,24 @@ const App = () => {
       <BrowserRouter>
         <Route path="/">
           <Navbar isAuthenticated={isAuthenticated} />
-          {userData && <FavChats username={userData.name} chats={chats} />}
+          {userData && (
+            <FavChats
+              user={userData}
+              chats={chats}
+              setCurrentRoom={setCurrentRoom}
+              enterChat={enterChat}
+              addToFav={addToFav}
+            />
+          )}
+          {userData && (
+            <CreatedChats
+              user={userData}
+              chats={chats}
+              setCurrentRoom={setCurrentRoom}
+              enterChat={enterChat}
+              addToFav={addToFav}
+            />
+          )}
         </Route>
         <Route path="/" exact>
           <Link to="/create-room" className="btn-create">
