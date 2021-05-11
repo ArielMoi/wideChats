@@ -10,9 +10,19 @@ const Navbar = ({isAuthenticated}) => {
       <div className="navbar">
         <ul>
           <li>
-              <img src={logo} onClick={() => history.push('/')}/>
+            <img src={logo} onClick={() => history.push("/")} />
           </li>
-          <li className='log'>{isAuthenticated ? <Logout /> : <Login />}</li>
+          <li>
+            <button className='btn-nav' onClick={() => history.push("/favorites-chats")}>
+              favorites-chats
+            </button>
+          </li>
+          <li>
+            <button className='btn-nav' onClick={() => history.push("/created-chats")}>
+              created-chats
+            </button>
+          </li>
+          <li className="log">{isAuthenticated ? <Logout /> : <Login />}</li>
         </ul>
       </div>
     );

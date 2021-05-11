@@ -103,24 +103,6 @@ const App = () => {
       <BrowserRouter>
         <Route path="/">
           <Navbar isAuthenticated={isAuthenticated} />
-          {userData && (
-            <FavChats
-              user={userData}
-              chats={chats}
-              setCurrentRoom={setCurrentRoom}
-              enterChat={enterChat}
-              addToFav={addToFav}
-            />
-          )}
-          {userData && (
-            <CreatedChats
-              user={userData}
-              chats={chats}
-              setCurrentRoom={setCurrentRoom}
-              enterChat={enterChat}
-              addToFav={addToFav}
-            />
-          )}
         </Route>
         <Route path="/" exact>
           <Link to="/create-room" className="btn-create">
@@ -154,6 +136,32 @@ const App = () => {
           {/* ) : (
             <UserNotLogged />
           )} */}
+        </Route>
+        <Route path="/favorites-chats" exact>
+          {isAuthenticated ? (
+            <FavChats
+              user={userData}
+              chats={chats}
+              setCurrentRoom={setCurrentRoom}
+              enterChat={enterChat}
+              addToFav={addToFav}
+            />
+          ) : (
+            <UserNotLogged />
+          )}
+        </Route>
+        <Route path="/created-chats" exact>
+          {isAuthenticated ? (
+            <CreatedChats
+              user={userData}
+              chats={chats}
+              setCurrentRoom={setCurrentRoom}
+              enterChat={enterChat}
+              addToFav={addToFav}
+            />
+          ) : (
+            <UserNotLogged />
+          )}
         </Route>
       </BrowserRouter>
     </div>

@@ -1,5 +1,5 @@
 .chat-showcase {
-  padding: 5px;
+  padding: 5px 20px;
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
   margin: 2% 20%;
@@ -7,6 +7,7 @@
   border-radius: 5px;
   color: #eaeaea;
   box-shadow: 0 0 5px #252a34;
+  text-align: left;
 }
 
 .chat-showcase h4,
