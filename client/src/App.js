@@ -65,10 +65,13 @@ const App = () => {
 
   const enterChat = (chat) => {
     setCurrentRoom(chat);
-    socket.emit("join", chat.name); // join user to his choice of room
+    socket.emit("join", {chat, userData}); // join user to his choice of room
   };
 
-  const createRoom = async (name, creator, isAnonymous, type = "general") => {
+  const createRoom = async (name, creator, isAnonymous, type) => {
+    if (type === ''){
+      type = 'general'
+    }
     const { data } = await API.post(`/chats/`, {
       name,
       creator,
@@ -135,6 +138,7 @@ const App = () => {
               currentRoom.isAnonymous ? "Anonymous" : user ? user.nickname : ""
             }
             room={currentRoom}
+            chats={chats}
           />
           {/* ) : (
             <UserNotLogged />

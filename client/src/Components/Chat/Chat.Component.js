@@ -20,12 +20,18 @@ const Chat = (props) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentRoom, setCurrentRoom] = useState("");
 
+  // useEffect(() => {
+  //   const chat = props.chats.find((chat) => chat.name === props.room.name);
+  //   console.log(chat.messages);
+  //   setMessages(chat.messages);
+  // }, []);
+
   socket.on("message", (message) => {
     setMessages([...messages, message]);
     // if (props.username === message.username){
     //   null; // message will be on the right side
     // }else {
-    //   null; // sound of incoming message
+    //   null;
     // }
   });
 
@@ -70,6 +76,7 @@ const Chat = (props) => {
   });
 
   useEffect(() => {
+    const chat = props.chats.find((chat) => chat.name === props.room.name);
     if (currentRoom !== props.room.name) {
       console.log("room change");
       setCurrentRoom(props.room);
@@ -79,6 +86,7 @@ const Chat = (props) => {
           text: `you entered room - ${props.room.name}`,
           time: "",
         },
+        ...chat.messages,
       ]);
     }
   }, [props.room, currentRoom]);

@@ -35,18 +35,19 @@ let currentRoom;
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
-  socket.on("join", (room) => {
-    socket.join(room);
-    currentRoom = room;
-    // Chat.findOneAndUpdate(
-    //   { name: message.room },
-    //   { $push: { messages: message } }
+  socket.on("join", async ({chat, userData}) => {
+    socket.join(userData);
+    socket.join('====');
+    currentRoom = chat.name;
+    // await Chat.findOneAndUpdate(
+    //   { name: chat.name },
+    //   { $push: { participants: userData.name } }
     // );
   });
 
-  socket.on("sendMessage", (message) => {
+  socket.on("sendMessage", async (message) => {
     socket.join(message.room);
-    Chat.findOneAndUpdate(
+    await Chat.findOneAndUpdate(
       { name: currentRoom },
       { $push: { messages: message } },
       { new: true }
@@ -54,9 +55,9 @@ io.on("connection", (socket) => {
     io.to(message.room).emit("message", message);
   });
 
-  socket.on("sendLocation", (message) => {
+  socket.on("sendLocation", async (message) => {
     socket.join(message.room);
-    Chat.findOneAndUpdate(
+    await Chat.findOneAndUpdate(
       { name: currentRoom },
       { $push: { messages: message } }
     );
