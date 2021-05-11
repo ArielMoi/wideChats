@@ -1,18 +1,16 @@
 const mongoose = require("mongoose");
-const { ObjectId } = require("mongoose");
 
 const Chat = mongoose.model("Chat", {
   name: {
     type: String,
     required: true,
   },
-  participants: [
-    {
-      participant: {
-        type: ObjectId,
-      },
-    },
-  ],
+  participants: {
+    type: Array
+  },
+  messages: {
+    type: Array
+  },
   type: {
     type: String,
     default: "general",

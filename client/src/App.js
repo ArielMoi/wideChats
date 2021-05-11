@@ -29,11 +29,10 @@ const App = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [userData, setUserData] = useState("");
 
-  // state for all messages
   const collectChats = async () => {
     const arrayOfChats = [];
     const { data } = await API.get(`/chats/`);
-    data.map((chat) => arrayOfChats.push(chat));
+    data.forEach((chat) => arrayOfChats.push(chat));
     setChats(arrayOfChats);
   };
 
@@ -41,7 +40,7 @@ const App = () => {
     collectChats();
   }, []);
 
-  const checkIfProfileExists = async (username) => {
+  const checkIfProfileExists = async () => {
     const { data } = await API.get(`/users/${user.nickname}`);
     return data !== "";
   };
@@ -92,7 +91,9 @@ const App = () => {
 
   const addToFav = async (chat) => {
     user && (await API.post(`/users/${user.nickname}/${chat}`));
-  }; // needs to only add the func to chat show case
+    const { data } = await API.get(`/users/${user.nickname}`); // to updated created chats
+    setUserData(data[0]);
+  }; 
 
   const addToCreated = async (user, chat) => {
     await API.post(`/users/${user}/${chat}/?created=true`);

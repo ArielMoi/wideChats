@@ -22,6 +22,11 @@ const Chat = (props) => {
 
   socket.on("message", (message) => {
     setMessages([...messages, message]);
+    // if (props.username === message.username){
+    //   null; // message will be on the right side
+    // }else {
+    //   null; // sound of incoming message
+    // }
   });
 
   socket.on("locationMessage", (message) => {

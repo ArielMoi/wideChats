@@ -3,11 +3,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
+const Chat = require("./src/models/chat");
 
 // socket.io -
 const http = require("http");
 const server = http.createServer(app);
-const socketIo = require("socket.io")
+const socketIo = require("socket.io");
 const io = socketIo(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -30,20 +31,35 @@ app.use(usersRouter);
 app.use(chatsRouter);
 
 const PORT = process.env.PORT || 5000;
-
+let currentRoom;
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
-  socket.on("join", room => {
+  socket.on("join", (room) => {
     socket.join(room);
-  })
+    currentRoom = room;
+    // Chat.findOneAndUpdate(
+    //   { name: message.room },
+    //   { $push: { messages: message } }
+    // );
+  });
 
   socket.on("sendMessage", (message) => {
     socket.join(message.room);
+    Chat.findOneAndUpdate(
+      { name: currentRoom },
+      { $push: { messages: message } },
+      { new: true }
+    );
     io.to(message.room).emit("message", message);
   });
 
   socket.on("sendLocation", (message) => {
+    socket.join(message.room);
+    Chat.findOneAndUpdate(
+      { name: currentRoom },
+      { $push: { messages: message } }
+    );
     io.to(message.room).emit("locationMessage", message);
   });
 });
