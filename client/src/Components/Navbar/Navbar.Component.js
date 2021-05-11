@@ -22,6 +22,14 @@ const Navbar = ({isAuthenticated}) => {
               created-chats
             </button>
           </li>
+          <li>
+          </li>
+          <li>
+          </li>
+          <li>
+          </li>
+          <li>
+          </li>
           <li className="log">{isAuthenticated ? <Logout /> : <Login />}</li>
         </ul>
       </div>

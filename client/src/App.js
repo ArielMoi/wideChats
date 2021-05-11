@@ -96,6 +96,8 @@ const App = () => {
 
   const addToCreated = async (user, chat) => {
     await API.post(`/users/${user}/${chat}/?created=true`);
+    const { data } = await API.get(`/users/${user.nickname}`); // to updated created chats
+    setUserData(data[0]);
   };
 
   return (
