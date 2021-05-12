@@ -2,12 +2,14 @@
   padding: 2px 5px;
   margin: 2px;
   background: transparent;
-  color: #ff2e63;
-  border: 1px solid #ff2e63;
+  color: #fff3e6;
+  border: 1px solid #fff3e6;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 4px #0d335d;
 }
 
 .btn:hover {
   cursor: pointer;
-  color: #eaeaea;
-  border: 1px solid #eaeaea;
+  color: #fff3e6;
+  border: 1px solid #0d335d;
 }

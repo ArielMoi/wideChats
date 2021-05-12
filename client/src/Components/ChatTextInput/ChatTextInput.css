@@ -2,7 +2,7 @@
   /* position: absolute; */
   position: fixed;
   bottom: 0;
-  background-color: #252a34;
+  background-color: grey;
   padding-bottom: 5vh;
   padding-top: 2vh;
   z-index: 2;
@@ -14,13 +14,13 @@
 
 .ChatTextInput button {
   background: transparent;
-  color: #ff2e63;
-  border: 1px solid #ff2e63;
+  color: #fff3e6;
+  border: 1px solid #fff3e6;
   padding: 2px 6px;
 }
 
 .ChatTextInput button:hover {
   cursor: pointer;
-  color: #08d9d6;
-  border: 1px solid #08d9d6;
+  color: #0d335d;
+  border: 1px solid #0d335d;
 }

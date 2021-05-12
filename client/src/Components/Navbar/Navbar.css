@@ -13,11 +13,10 @@
   float: right;
   margin-right: 2vw;
   margin-top: 1vh;
-  /* top: 1.5vh; */
 }
 
 .navbar {
-  background-color: #08d9d6;
+  background-color: #fff3e6;
   height: 6vh;
   position: fixed;
   width: 100vw;
@@ -30,7 +29,18 @@
   padding-top: 2vh;
 }
 
+.navbar button {
+  color: #0d335d;
+  border: 1px solid #0d335d;
+}
+
+.navbar button:hover {
+  color: #c1a1d3;
+  border: 1px solid transparent;
+}
+
 .navbar .btn-nav:hover {
-  color: #eaeaea;
+  color: #0d335d;
+  border: 1px solid transparent;
   cursor: pointer;
 }

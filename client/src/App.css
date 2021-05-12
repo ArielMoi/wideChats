@@ -2,11 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poiret One", cursive;
 }
 body,
 html {
-  background: #252a34;
-  color: #eaeaea;
+  background: grey;
+  color: #fff3e6;
 }
 
 .btn-create {

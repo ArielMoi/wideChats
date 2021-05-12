@@ -3,11 +3,12 @@
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
   margin: 2% 20%;
-  border: 1px solid #ff2e63;
+  border: 1px solid #c1a1d3;
   border-radius: 5px;
-  color: #eaeaea;
-  box-shadow: 0 0 5px #252a34;
+  color: #ffff;
+  box-shadow: 0 0 5px #c1a1d3;
   text-align: left;
+  box-shadow: 0 0 15px black;
 }
 
 .chat-showcase h4,

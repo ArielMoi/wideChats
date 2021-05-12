@@ -6,10 +6,10 @@ const ChatMessage = (props) => {
 
   useEffect(() => {
     console.log(messageRef);
-    console.log(props.message.sent);
-    if (props.message.sent) {
-      messageRef.style.background = "blue";
-    }
+    // console.log(props.message.sent);
+    // if (props.message.sent) {
+    //   messageRef.style.background = "blue";
+    // }
   }, []);
 
   return (
