@@ -20,19 +20,13 @@ const Chat = (props) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentRoom, setCurrentRoom] = useState("");
 
-  // useEffect(() => {
-  //   const chat = props.chats.find((chat) => chat.name === props.room.name);
-  //   console.log(chat.messages);
-  //   setMessages(chat.messages);
-  // }, []);
-
   socket.on("message", (message) => {
-    setMessages([...messages, message]);
-    // if (props.username === message.username){
-    //   null; // message will be on the right side
-    // }else {
-    //   null;
-    // }
+    if (props.username === message.username){
+      message.sent = true;
+      setMessages([...messages, message]);
+    }else {
+      setMessages([...messages, message]);
+    }
   });
 
   socket.on("locationMessage", (message) => {
@@ -90,7 +84,9 @@ const Chat = (props) => {
       ]);
     }
   }, [props.room, currentRoom]);
-
+// if message has message.left add props of class in message to be left side.
+// add clasname oprion in chat message
+// add class of chat msg to change bg to blueand align left
   return (
     <div className="chat-window">
       {messages &&
@@ -101,6 +97,7 @@ const Chat = (props) => {
               time={message.time}
               text={message.text}
               key={uuid()}
+              messageSent={message.sent}
             />
           ) : (
             <LocationMessage

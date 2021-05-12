@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
 
   socket.on("join", async ({chat, userData}) => {
     socket.join(userData);
-    socket.join('====');
+    socket.join('====');// TODO here add an user joined chat message option
     currentRoom = chat.name;
     // await Chat.findOneAndUpdate(
     //   { name: chat.name },
