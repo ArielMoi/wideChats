@@ -25,6 +25,9 @@ const User = mongoose.model("User", {
   }, 
   favoriteChats: {
     type: Array
+  },
+  posts: {
+    type: Array
   }
 });
 

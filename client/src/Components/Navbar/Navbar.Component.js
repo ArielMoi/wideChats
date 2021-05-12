@@ -14,12 +14,12 @@ const Navbar = ({isAuthenticated}) => {
           </li>
           <li>
             <button className='btn-nav' onClick={() => history.push("/favorites-chats")}>
-              favorites-chats
+              Favorites Chats
             </button>
           </li>
           <li>
             <button className='btn-nav' onClick={() => history.push("/created-chats")}>
-              created-chats
+              Created Chats
             </button>
           </li>
           <li>

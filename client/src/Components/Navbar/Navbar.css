@@ -21,6 +21,8 @@
   position: fixed;
   width: 100vw;
   top: 0;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .navbar .btn-nav {

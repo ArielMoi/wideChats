@@ -9,6 +9,7 @@
   box-shadow: 0 0 5px #c1a1d3;
   text-align: left;
   box-shadow: 0 0 15px black;
+  border-top-left-radius: 15px;
 }
 
 .chat-showcase h4,

@@ -9,6 +9,7 @@ import Button from "./Components/Button/Button.Component";
 import Navbar from "./Components/Navbar/Navbar.Component";
 import FavChats from "./Components/FavChats/FavChats.Component";
 import CreatedChats from "./Components/CreatedChats/CreatedChats.Component";
+import Profile from "./Components/Profile/Profile.Component";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import AllChats from "./Components/AllChats/AllChats.Component";
@@ -93,6 +94,7 @@ const App = () => {
   };
 
   const addToFav = async (chat) => {
+    console.log(user);
     user && (await API.post(`/users/${user.nickname}/${chat}`));
     const { data } = await API.get(`/users/${user.nickname}`); // to updated created chats
     setUserData(data[0]);
@@ -109,6 +111,7 @@ const App = () => {
       <BrowserRouter>
         <Route path="/">
           <Navbar isAuthenticated={isAuthenticated} />
+          {/* {user && <Profile profileImg={user.picture} username={user.given_name} />} */}
         </Route>
         <Route path="/" exact>
           <Link to="/create-room" className="btn-create">
