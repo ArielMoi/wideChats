@@ -28,6 +28,9 @@ const User = mongoose.model("User", {
   },
   posts: {
     type: Array
+  },
+  friends: {
+    type: Array
   }
 });
 
