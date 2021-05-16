@@ -73,7 +73,7 @@ const addToUserFriendsController = async (req, res) => {
 //TODO: create the utils: 
 // const removeUserPostsController = async (req, res) => {
 //   try {
-//     const user = await removeUserPosts(req.body.username, req.body.post);
+//     const user = await removeUserPost(req.body.username, req.body.post);
 //     res.status(200).send(user);
 //   } catch (e) {
 //     res.status(400).send(e.message);
@@ -82,7 +82,7 @@ const addToUserFriendsController = async (req, res) => {
 
 // const removeUserFriendsController = async (req, res) => {
 //   try {
-//     const user = await removeUserFriends(
+//     const user = await removeUserFriend(
 //       req.body.username,
 //       req.body.friendName
 //     );

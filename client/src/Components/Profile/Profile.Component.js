@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import API from '../../API'
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import FriendsSearch from '../FriendsSearch/FriendsSearch.Component'
 
 
 const Profile = ({ profileImg, user }) => {
@@ -20,13 +21,14 @@ const Profile = ({ profileImg, user }) => {
 
   // TODO:
   // posts/friends component (DOUBLE)
-  // friends search and add function
+  // friends search and add function -> AddFriend Component !!
 
   return (
     <div>
       <div className="header">
         <img src={profileImg} />
         <h1>{user.name}</h1>
+        <button>Add A Friend</button>
       </div>
       <div className="status-input">
         <form>
@@ -40,7 +42,9 @@ const Profile = ({ profileImg, user }) => {
           </button>
         </form>
       </div>
-      <div className="posts"></div>
+      <div className="posts">
+        <FriendsSearch user={user}/>
+      </div>
     </div>
   );
 };
