@@ -1,34 +1,38 @@
-import {useState} from 'react';
-import API from '../../API'
-import { Link } from "react-router-dom";
-import FriendsSearch from '../FriendsSearch/FriendsSearch.Component'
-
+import { useState } from "react";
+import API from "../../API";
+import FriendsSearch from "../FriendsSearch/FriendsSearch.Component";
+import Post from "../Post/Post.Component";
+import date from "date-and-time";
 
 const Profile = ({ profileImg, user }) => {
-  const [post, setPost] = useState('')
-  const [currentlyShownData, setCurrentlyShownData] = useState(user.posts)
+  const [post, setPost] = useState("");
+  const [currentlyShownData, setCurrentlyShownData] = useState("friends");
 
   const submitPost = async (event) => {
     event.preventDefault();
 
-    await API.patch('/users/', {
+    await API.patch("/users/", {
       username: user.name,
-      post,
-    })
+      post: { text: post, time: date.format(new Date(), "DD/MM HH:mm") },
+    });
 
-    setPost('');
-  }
-
-  // TODO:
-  // posts/friends component (DOUBLE)
-  // friends search and add function -> AddFriend Component !!
+    setPost("");
+    console.log(user);
+  };
 
   return (
     <div>
       <div className="header">
         <img src={profileImg} />
         <h1>{user.name}</h1>
-        <button>Add A Friend</button>
+        {currentlyShownData === "friends" && (
+          <button onClick={() => setCurrentlyShownData("posts")}>show posts</button>
+        )}
+        {currentlyShownData === "posts" && (
+          <button onClick={() => setCurrentlyShownData("friends")}>
+            show friends
+          </button>
+        )}
       </div>
       <div className="status-input">
         <form>
@@ -42,11 +46,13 @@ const Profile = ({ profileImg, user }) => {
           </button>
         </form>
       </div>
-      <div className="posts">
-        <FriendsSearch user={user}/>
+      <div className="data">
+        {currentlyShownData === "friends" && <FriendsSearch user={user} />}
+        {currentlyShownData === "posts" &&
+          user.posts.map((post) => <Post post={post} />)}
       </div>
     </div>
   );
 };
-
+//<Post post={post} />
 export default Profile;

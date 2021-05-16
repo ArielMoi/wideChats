@@ -5,15 +5,18 @@ import ShowcaseDataUsers from "../ShowcaseDataUsers/ShowcaseDataUsers.Component"
 const FriendsSearch = ({ user }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [currentSearch, setCurrentSearch] = useState("");
+  const [showMyFriends, setShowMyFriends] = useState(true);
 
   useEffect(() => {
     const collectAllUsers = async () => {
       const { data } = await API.get("/users/");
-      console.log(data);
+      //   console.log(data);
       setAllUsers(data);
     };
 
     collectAllUsers();
+
+    console.log();
   }, []);
 
   const addToFriends = async (friendName) => {
@@ -21,7 +24,10 @@ const FriendsSearch = ({ user }) => {
       username: user.name,
       friendName,
     });
-    console.log(data);
+  };
+
+  const removeFromFriends = async (friendName) => {
+    console.log("future func");
   };
 
   return (
@@ -35,12 +41,34 @@ const FriendsSearch = ({ user }) => {
           value={currentSearch}
         />
       </form>
+      {showMyFriends ? (
+        <button onClick={() => setShowMyFriends(false)}>All Users</button>
+      ) : (
+        <button onClick={() => setShowMyFriends(true)}>My Friends</button>
+      )}
       <div className="showcase-users">
         {allUsers &&
+          !showMyFriends &&
           allUsers.map(
-            (user) =>
-              user.name.includes(currentSearch) && (
-                <ShowcaseDataUsers name={user.name} addFunc={() => addToFriends(user.name)}/>
+            (friend) =>
+              friend.name.includes(currentSearch) && (
+                <ShowcaseDataUsers
+                  name={friend.name}
+                  addFunc={() => addToFriends(friend.name)}
+                  btnText="Add"
+                />
+              )
+          )}
+        {allUsers &&
+          showMyFriends &&
+          allUsers.map(
+            (friend) =>
+              user.friends.includes(friend.name) && (
+                <ShowcaseDataUsers
+                  name={friend.name}
+                  addFunc={() => removeFromFriends(friend.name)}
+                  btnText="Remove"
+                />
               )
           )}
       </div>
