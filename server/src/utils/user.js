@@ -37,10 +37,28 @@ const addToUserCreated = async (userName, chat) => {
   );
 }
 
+const addToUserPosts = async (userName, post) => {
+  return await User.findOneAndUpdate(
+    { name: userName },
+    { $push: { posts: post } },
+    { new: true }
+  );
+}
+
+const addToUserFriends = async (userName, friendName) => {
+  return await User.findOneAndUpdate(
+    { name: userName },
+    { $push: { friends: friendName } },
+    { new: true }
+  );
+}
+
 module.exports = {
   addUser,
   getUser,
   getAllUsers,
   addToUserFav,
   addToUserCreated,
+  addToUserPosts,
+  addToUserFriends,
 };

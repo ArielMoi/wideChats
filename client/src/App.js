@@ -66,12 +66,12 @@ const App = () => {
 
   const enterChat = (chat) => {
     setCurrentRoom(chat);
-    socket.emit("join", {chat, userData}); // join user to his choice of room
+    socket.emit("join", { chat, userData }); // join user to his choice of room
   };
 
   const createRoom = async (name, creator, isAnonymous, type) => {
-    if (type === ''){
-      type = 'general'
+    if (type === "") {
+      type = "general";
     }
     const { data } = await API.post(`/chats/`, {
       name,
@@ -98,7 +98,7 @@ const App = () => {
     user && (await API.post(`/users/${user.nickname}/${chat}`));
     const { data } = await API.get(`/users/${user.nickname}`); // to updated created chats
     setUserData(data[0]);
-  }; 
+  };
 
   const addToCreated = async (user, chat) => {
     await API.post(`/users/${user}/${chat}/?created=true`);
@@ -110,8 +110,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Route path="/">
-          <Navbar isAuthenticated={isAuthenticated} />
-          {/* {user && <Profile profileImg={user.picture} username={user.given_name} />} */}
+          <Navbar isAuthenticated={isAuthenticated} user={user && user}/>
         </Route>
         <Route path="/" exact>
           <Link to="/create-room" className="btn-create">
@@ -169,6 +168,13 @@ const App = () => {
               enterChat={enterChat}
               addToFav={addToFav}
             />
+          ) : (
+            <UserNotLogged />
+          )}
+        </Route>
+        <Route path="/profile/:username" exact>
+          {isAuthenticated ? (
+            <Profile profileImg={user.picture} user={userData} />
           ) : (
             <UserNotLogged />
           )}

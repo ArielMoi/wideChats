@@ -4,7 +4,7 @@ import logo from '../../img/wideChatIcon.png';
 import { useHistory } from "react-router-dom";
 import './Navbar.css'
 
-const Navbar = ({isAuthenticated}) => {
+const Navbar = ({isAuthenticated, user}) => {
     const history = useHistory();
     return (
       <div className="navbar">
@@ -13,23 +13,32 @@ const Navbar = ({isAuthenticated}) => {
             <img src={logo} onClick={() => history.push("/")} />
           </li>
           <li>
-            <button className='btn-nav' onClick={() => history.push("/favorites-chats")}>
+            <button
+              className="btn-nav"
+              onClick={() => history.push(`/profile/${user.nickname}`)}
+            >
+              My Profile
+            </button>
+          </li>
+          <li>
+            <button
+              className="btn-nav"
+              onClick={() => history.push("/favorites-chats")}
+            >
               Favorites Chats
             </button>
           </li>
           <li>
-            <button className='btn-nav' onClick={() => history.push("/created-chats")}>
+            <button
+              className="btn-nav"
+              onClick={() => history.push("/created-chats")}
+            >
               Created Chats
             </button>
           </li>
-          <li>
-          </li>
-          <li>
-          </li>
-          <li>
-          </li>
-          <li>
-          </li>
+          <li></li>
+          <li></li>
+          <li></li>
           <li className="log">{isAuthenticated ? <Logout /> : <Login />}</li>
         </ul>
       </div>
