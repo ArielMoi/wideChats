@@ -27,7 +27,7 @@ const socket = openSocket(socketUri, {
 const App = () => {
   const [chats, setChats] = useState([]);
   const [currentRoom, setCurrentRoom] = useState({});
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const [userData, setUserData] = useState("");
 
   const collectChats = async () => {
@@ -110,7 +110,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Route path="/">
-          <Navbar isAuthenticated={isAuthenticated} user={user && user}/>
+          <Navbar isAuthenticated={isAuthenticated} user={user && user} />
         </Route>
         <Route path="/" exact>
           <Link to="/create-room" className="btn-create">

@@ -2,10 +2,7 @@ const ProfileNav = () => {
     return (<div>
         <ul>
             <li>
-                <button>My Created Chats</button>
-            </li>
-            <li>
-                <button>My Favorite Chats</button>
+                <button>Friends</button>
             </li>
             <li>
                 <button>Posts</button>
