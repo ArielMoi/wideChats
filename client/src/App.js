@@ -174,7 +174,7 @@ const App = () => {
         </Route>
         <Route path="/profile/:username" exact>
           {isAuthenticated ? (
-            <Profile profileImg={user.picture} user={userData} />
+            <Profile profileImg={user.picture} user={userData} setUserData={setUserData} />
           ) : (
             <UserNotLogged />
           )}

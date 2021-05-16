@@ -4,9 +4,9 @@ import FriendsSearch from "../FriendsSearch/FriendsSearch.Component";
 import Post from "../Post/Post.Component";
 import date from "date-and-time";
 
-const Profile = ({ profileImg, user }) => {
+const Profile = ({ profileImg, user, setUserData }) => {
   const [post, setPost] = useState("");
-  const [currentlyShownData, setCurrentlyShownData] = useState("friends");
+  const [currentlyShownData, setCurrentlyShownData] = useState("posts");
 
   const submitPost = async (event) => {
     event.preventDefault();
@@ -17,16 +17,23 @@ const Profile = ({ profileImg, user }) => {
     });
 
     setPost("");
-    console.log(user);
+    updateUserData();
+  };
+
+  const updateUserData = async () => {
+    const { data } = await API.get(`/users/${user.name}`);
+    setUserData(data[0]);
   };
 
   return (
     <div>
       <div className="header">
-        <img src={profileImg} />
+        <img src={profileImg} alt='profile-img'/>
         <h1>{user.name}</h1>
         {currentlyShownData === "friends" && (
-          <button onClick={() => setCurrentlyShownData("posts")}>show posts</button>
+          <button onClick={() => setCurrentlyShownData("posts")}>
+            show posts
+          </button>
         )}
         {currentlyShownData === "posts" && (
           <button onClick={() => setCurrentlyShownData("friends")}>
@@ -47,7 +54,9 @@ const Profile = ({ profileImg, user }) => {
         </form>
       </div>
       <div className="data">
-        {currentlyShownData === "friends" && <FriendsSearch user={user} />}
+        {currentlyShownData === "friends" && (
+          <FriendsSearch user={user} updateUserData={updateUserData} />
+        )}
         {currentlyShownData === "posts" &&
           user.posts.map((post) => <Post post={post} />)}
       </div>

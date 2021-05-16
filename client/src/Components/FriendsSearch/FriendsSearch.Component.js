@@ -2,7 +2,7 @@ import API from "../../API";
 import { useEffect, useState } from "react";
 import ShowcaseDataUsers from "../ShowcaseDataUsers/ShowcaseDataUsers.Component";
 
-const FriendsSearch = ({ user }) => {
+const FriendsSearch = ({ user, updateUserData }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [currentSearch, setCurrentSearch] = useState("");
   const [showMyFriends, setShowMyFriends] = useState(true);
@@ -10,7 +10,6 @@ const FriendsSearch = ({ user }) => {
   useEffect(() => {
     const collectAllUsers = async () => {
       const { data } = await API.get("/users/");
-      //   console.log(data);
       setAllUsers(data);
     };
 
@@ -20,14 +19,16 @@ const FriendsSearch = ({ user }) => {
   }, []);
 
   const addToFriends = async (friendName) => {
-    const { data } = await API.patch("/users/friends/", {
+    await API.patch("/users/friends/", {
       username: user.name,
       friendName,
     });
+    updateUserData();
   };
 
   const removeFromFriends = async (friendName) => {
     console.log("future func");
+    updateUserData();
   };
 
   return (
