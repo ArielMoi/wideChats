@@ -45,17 +45,18 @@ const FriendProfile = ({ friendName, setFriendProfile }) => {
         )}
       </div>
       <div className="data">
-        {currentlyShownData === "friends" && allUsers &&
+        {allUsers &&
+          currentlyShownData === "friends" &&
           allUsers.map(
             (friend) =>
-              profileData.friends.includes(friend.name) && (
-                <ShowcaseDataUsers
-                  name={friend.name}
-                />
-              )
+              profileData.friends.includes(friend.name) &&
+            (<ShowcaseDataUsers name={friend.name} />)
           )}
-        {currentlyShownData === "posts" && allUsers &&
-          profileData.posts.map((post) => <Post post={post} />)}
+        {allUsers &&
+          currentlyShownData === "posts" &&
+          profileData.posts && profileData.posts.map((post) => (
+            <Post post={post} />
+          ))}
       </div>
     </div>
   );
