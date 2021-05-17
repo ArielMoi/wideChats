@@ -30,42 +30,44 @@ const Profile = ({ profileImg, user, setUserData }) => {
 
   return (
     <div>
-      <div className="header">
-        <img src={profileImg} alt="profile-img" />
-        <h1>{user.name}</h1>
-        {currentlyShownData === "friends" && (
-          <button onClick={() => setCurrentlyShownData("posts")}>
-            show posts
-          </button>
-        )}
-        {currentlyShownData === "posts" && (
-          <button onClick={() => setCurrentlyShownData("friends")}>
-            show friends
-          </button>
-        )}
-      </div>
-      <div className="status-input">
-        <form>
-          <textarea
-            placeholder="how you feeling?"
-            onChange={(e) => setPost(e.target.value)}
-            value={post}
-          />
-          <button onClick={submitPost} type="submit">
-            Post
-          </button>
-        </form>
-      </div>
-      <div className="data">
-        {currentlyShownData === "friends" && (
-          <FriendsSearch
-            user={user}
-            updateUserData={updateUserData}
-            setFriendProfile={setFriendProfile}
-          />
-        )}
-        {currentlyShownData === "posts" &&
-          user.posts.map((post) => <Post post={post} key={uuid()}/>)}
+      <div className="profile" style={{ display: friendProfile !== "" ? "none" : "block" }}>
+        <div className="header">
+          <img src={profileImg} alt="profile-img" />
+          <h1>{user.name}</h1>
+          {currentlyShownData === "friends" && (
+            <button onClick={() => setCurrentlyShownData("posts")}>
+              show posts
+            </button>
+          )}
+          {currentlyShownData === "posts" && (
+            <button onClick={() => setCurrentlyShownData("friends")}>
+              show friends
+            </button>
+          )}
+        </div>
+        <div className="status-input">
+          <form>
+            <textarea
+              placeholder="how you feeling?"
+              onChange={(e) => setPost(e.target.value)}
+              value={post}
+            />
+            <button onClick={submitPost} type="submit">
+              Post
+            </button>
+          </form>
+        </div>
+        <div className="data">
+          {currentlyShownData === "friends" && (
+            <FriendsSearch
+              user={user}
+              updateUserData={updateUserData}
+              setFriendProfile={setFriendProfile}
+            />
+          )}
+          {currentlyShownData === "posts" &&
+            user.posts.map((post) => <Post post={post} key={uuid()} />)}
+        </div>
       </div>
       {friendProfile !== "" && (
         <FriendProfile

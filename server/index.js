@@ -19,6 +19,7 @@ const io = socketIo(server, {
 //routers
 const usersRouter = require("./src/routers/user");
 const chatsRouter = require("./src/routers/chat");
+const directChatsRouter = require("./src/routers/directChat");
 
 const publicDirectory = path.join(__dirname, "../client/build");
 
@@ -29,6 +30,7 @@ app.use(express.static(publicDirectory));
 app.use(cors());
 app.use(usersRouter);
 app.use(chatsRouter);
+app.use(directChatsRouter);
 
 const PORT = process.env.PORT || 5000;
 let currentRoom;

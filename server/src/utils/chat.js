@@ -27,10 +27,6 @@ const getAllUserChats = async (userId) => {
   return await Chat.find({ creator: userId });
 };
 
-// getChat("608fdfc61adbc95b2cedbfca").then(chat => console.log(chat))
-// getAllChats().then(chats => console.log(chats))
-// addChat('ariel', 'ariel@gmail.com')
-
 module.exports = {
   addChat,
   getChat,
