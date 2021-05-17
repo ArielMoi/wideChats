@@ -1,8 +1,9 @@
 import API from "../../API";
 import { useEffect, useState } from "react";
 import ShowcaseDataUsers from "../ShowcaseDataUsers/ShowcaseDataUsers.Component";
+import { v4 as uuid } from "uuid";
 
-const FriendsSearch = ({ user, updateUserData }) => {
+const FriendsSearch = ({ user, updateUserData, setFriendProfile }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [currentSearch, setCurrentSearch] = useState("");
   const [showMyFriends, setShowMyFriends] = useState(true);
@@ -14,8 +15,6 @@ const FriendsSearch = ({ user, updateUserData }) => {
     };
 
     collectAllUsers();
-
-    console.log();
   }, []);
 
   const addToFriends = async (friendName) => {
@@ -57,6 +56,8 @@ const FriendsSearch = ({ user, updateUserData }) => {
                   name={friend.name}
                   addFunc={() => addToFriends(friend.name)}
                   btnText="Add"
+                  showProfile={() => setFriendProfile(friend.name)}
+                  key={uuid()}
                 />
               )
           )}
@@ -69,6 +70,8 @@ const FriendsSearch = ({ user, updateUserData }) => {
                   name={friend.name}
                   addFunc={() => removeFromFriends(friend.name)}
                   btnText="Remove"
+                  showProfile={() => setFriendProfile(friend.name)}
+                  key={uuid()}
                 />
               )
           )}

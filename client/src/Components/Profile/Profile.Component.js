@@ -2,11 +2,14 @@ import { useState } from "react";
 import API from "../../API";
 import FriendsSearch from "../FriendsSearch/FriendsSearch.Component";
 import Post from "../Post/Post.Component";
+import FriendProfile from "../FriendProfile/FriendProfile.Component";
 import date from "date-and-time";
+import { v4 as uuid } from "uuid";
 
 const Profile = ({ profileImg, user, setUserData }) => {
   const [post, setPost] = useState("");
   const [currentlyShownData, setCurrentlyShownData] = useState("posts");
+  const [friendProfile, setFriendProfile] = useState("");
 
   const submitPost = async (event) => {
     event.preventDefault();
@@ -28,7 +31,7 @@ const Profile = ({ profileImg, user, setUserData }) => {
   return (
     <div>
       <div className="header">
-        <img src={profileImg} alt='profile-img'/>
+        <img src={profileImg} alt="profile-img" />
         <h1>{user.name}</h1>
         {currentlyShownData === "friends" && (
           <button onClick={() => setCurrentlyShownData("posts")}>
@@ -55,13 +58,23 @@ const Profile = ({ profileImg, user, setUserData }) => {
       </div>
       <div className="data">
         {currentlyShownData === "friends" && (
-          <FriendsSearch user={user} updateUserData={updateUserData} />
+          <FriendsSearch
+            user={user}
+            updateUserData={updateUserData}
+            setFriendProfile={setFriendProfile}
+          />
         )}
         {currentlyShownData === "posts" &&
-          user.posts.map((post) => <Post post={post} />)}
+          user.posts.map((post) => <Post post={post} key={uuid()}/>)}
       </div>
+      {friendProfile !== "" && (
+        <FriendProfile
+          friendName={friendProfile}
+          setFriendProfile={setFriendProfile}
+        />
+      )}
     </div>
   );
 };
-//<Post post={post} />
+
 export default Profile;
