@@ -1,4 +1,7 @@
+import { useHistory } from "react-router-dom";
+
 const ShowcaseDataUsers = (data) => {
+  const history = useHistory();
   return (
     <div>
       <h3>{data.name}</h3>
@@ -7,6 +10,7 @@ const ShowcaseDataUsers = (data) => {
       {data.showProfile && (
         <button onClick={data.showProfile}>Show Profile</button>
       )}
+      <button onClick={() => history.push(`/${data.name}/chat`)}>Message</button>
     </div>
   );
 };

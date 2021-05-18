@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import ShowcaseDataUsers from "../ShowcaseDataUsers/ShowcaseDataUsers.Component";
 import { v4 as uuid } from "uuid";
 
+
 const FriendsSearch = ({ user, updateUserData, setFriendProfile }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [currentSearch, setCurrentSearch] = useState("");
   const [showMyFriends, setShowMyFriends] = useState(true);
+
 
   useEffect(() => {
     const collectAllUsers = async () => {

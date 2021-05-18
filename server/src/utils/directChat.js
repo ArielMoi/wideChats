@@ -3,7 +3,7 @@ const DirectChat = require("../models/directChat");
 const addDirectChat = async (participants) => {
   try {
     const chat = new DirectChat({
-      name: participants.sort().join(',')
+      name: participants.sort().join('')
     });
     await chat.save();
     return chat;

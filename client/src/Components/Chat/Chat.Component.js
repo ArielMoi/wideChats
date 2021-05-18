@@ -7,6 +7,8 @@ import date from "date-and-time";
 import { v4 as uuid } from "uuid";
 import "./Chat.css";
 import { origin, socketUri } from "../../cors"; // for dev or production
+import { useParams } from "react-router-dom";
+import API from "../../API";
 
 const socket = openSocket(socketUri, {
   cors: {
@@ -19,12 +21,13 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentRoom, setCurrentRoom] = useState("");
+  const { friendName } = useParams();
 
   socket.on("message", (message) => {
-    if (props.username === message.username){
+    if (props.username === message.username) {
       message.sent = true;
       setMessages([...messages, message]);
-    }else {
+    } else {
       setMessages([...messages, message]);
     }
   });
@@ -70,23 +73,53 @@ const Chat = (props) => {
   });
 
   useEffect(() => {
-    const chat = props.chats.find((chat) => chat.name === props.room.name);
-    if (currentRoom !== props.room.name) {
-      console.log("room change");
-      setCurrentRoom(props.room);
-      setMessages([
-        {
-          username: "Admin",
-          text: `you entered room - ${props.room.name}`,
-          time: "",
-        },
-        ...chat.messages,
-      ]);
+    if (props.room !== "direct") {
+      const chat = props.chats.find((chat) => chat.name === props.room.name);
+      if (currentRoom !== props.room.name) {
+        console.log("room change");
+        setCurrentRoom(props.room);
+        setMessages([
+          {
+            username: "Admin",
+            text: `you entered room - ${props.room.name}`,
+            time: "",
+          },
+          ...chat.messages,
+        ]);
+      }
+    } else {
+      console.log('direct chat');
+      const startDirectChat = async () => {
+        let room = [friendName, props.username].sort().join("");
+
+        let roomData;
+        try {
+          const { data } = await API.get(`/direct-chats/${room}`);
+          roomData = data;
+        } catch(e) {
+          // case of first direct message
+          console.log(e);
+          const {data} = await API.post(`/direct-chats`, {
+            participants: [friendName, props.username],
+          });
+          roomData = data
+        }
+
+        setCurrentRoom(room);
+        setMessages([
+          {
+            username: "Admin",
+            text: `you in a direct chat with - ${friendName}`,
+            time: "",
+          },
+          ...roomData.messages,
+        ]);
+      };
+
+      startDirectChat();
     }
   }, [props.room, currentRoom]);
-// if message has message.left add props of class in message to be left side.
-// add clasname oprion in chat message
-// add class of chat msg to change bg to blueand align left
+
   return (
     <div className="chat-window">
       {messages &&

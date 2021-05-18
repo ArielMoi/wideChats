@@ -41,21 +41,23 @@ const App = () => {
     collectChats();
   }, []);
 
-  const checkIfProfileExists = async () => {
-    const { data } = await API.get(`/users/${user.nickname}`);
-    return data !== "";
-  };
 
   const CheckAndCreateProfile = async () => {
     // checks if profile (user data in db) exists. (if first login). pull or creates data.
-    const profileExists = await checkIfProfileExists();
-    if (!profileExists) {
+    const {data} = await API.get(`/users/${user.nickname}`);
+    const profile = data[0];
+    console.log(profile);
+    if (profile.length <= 1) {
+      console.log("profile don`t exists");
       const { data } = await createProfile(user);
+      console.log(data);
       setUserData(data[0]);
     } else {
-      const { data } = await API.get(`/users/${user.nickname}`);
-      setUserData(data[0]);
+      console.log("profile exists");
+      setUserData(profile);
     }
+
+    console.log(user);
   };
 
   useEffect(() => {
@@ -183,19 +185,19 @@ const App = () => {
             <UserNotLogged />
           )}
         </Route>
-        {/* <Route path="/:friendName/chat" exact> */}
-          {/* {isAuthenticated ? ( */}
-          {/* <Chat
+        <Route path="/:friendName/chat" exact>
+          {isAuthenticated ? (
+          <Chat
             username={
               user ? user.nickname : ""
             }
-            // room={[frie]}
+            room='direct'
             chats={chats}
-          /> */}
-          {/* ) : (
+          />
+          ) : (
             <UserNotLogged />
-          )} */}
-        {/* </Route> */}
+          )}
+        </Route>
       </BrowserRouter>
     </div>
   );
