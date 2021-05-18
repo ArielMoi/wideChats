@@ -2,7 +2,7 @@ const {
   addDirectChatController,
   getDirectChatController,
   getAllDirectChatsController,
-} = require("../controllers/chat");
+} = require("../controllers/directChat");
 const express = require("express");
 const router = new express.Router();
 

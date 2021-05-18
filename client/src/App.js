@@ -174,11 +174,28 @@ const App = () => {
         </Route>
         <Route path="/profile/:username" exact>
           {isAuthenticated ? (
-            <Profile profileImg={user.picture} user={userData} setUserData={setUserData} />
+            <Profile
+              profileImg={user.picture}
+              user={userData}
+              setUserData={setUserData}
+            />
           ) : (
             <UserNotLogged />
           )}
         </Route>
+        {/* <Route path="/:friendName/chat" exact> */}
+          {/* {isAuthenticated ? ( */}
+          {/* <Chat
+            username={
+              user ? user.nickname : ""
+            }
+            // room={[frie]}
+            chats={chats}
+          /> */}
+          {/* ) : (
+            <UserNotLogged />
+          )} */}
+        {/* </Route> */}
       </BrowserRouter>
     </div>
   );

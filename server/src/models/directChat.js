@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const DirectChat = mongoose.model("Chat", {
+const DirectChat = mongoose.model("directChat", {
   name: {
     type: String,
   },

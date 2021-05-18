@@ -1,5 +1,3 @@
-const Chat = require("../models/chat");
-
 const {
   addDirectChat,
   getDirectChat,
