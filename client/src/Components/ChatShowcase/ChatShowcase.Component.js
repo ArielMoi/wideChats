@@ -7,12 +7,16 @@ const ChatShowcase = ({
   enterFunc,
   addToFav,
   removeFromFav,
+  deleteChat
 }) => {
   // can be change to input check box when changed to true will be add to fav abd when value is false will be remove from favs
   return (
     <div className="chat-showcase">
       <h4>{chatName}</h4>
       <h5>{tag}</h5>
+      {deleteChat && (
+        <Button text="delete chat" onClick={() => deleteChat(chatName)} />
+      )}
       {addToFav && (
         <Button text="add to Favorite" onClick={() => addToFav(chatName)} />
       )}

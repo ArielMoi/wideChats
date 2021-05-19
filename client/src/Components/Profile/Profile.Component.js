@@ -6,21 +6,26 @@ import FriendProfile from "../FriendProfile/FriendProfile.Component";
 import date from "date-and-time";
 import { v4 as uuid } from "uuid";
 import "./Profile.css";
+import EditWindow from '../EditWindow/EditWindow.Component'
 
 const Profile = ({ profileImg, user, setUserData }) => {
   const [post, setPost] = useState("");
   const [currentlyShownData, setCurrentlyShownData] = useState("posts");
   const [friendProfile, setFriendProfile] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const [postToEdit, setPostToEdit] = useState({});
 
   const submitPost = async (event) => {
     event.preventDefault();
 
+    const postTemp = post; // so to reset text before request
+    setPost(""); // before request to prevent double upload
+
     await API.patch("/users/", {
       username: user.name,
-      post: { text: post, time: date.format(new Date(), "DD/MM HH:mm") },
+      post: { text: postTemp, time: date.format(new Date(), "DD/MM HH:mm") },
     });
-
-    setPost("");
+    
     updateUserData();
   };
 
@@ -76,8 +81,18 @@ const Profile = ({ profileImg, user, setUserData }) => {
                 key={uuid()}
                 username={user.name}
                 updateUserData={updateUserData}
+                setEditMode={setEditMode}
+                setPostToEdit={setPostToEdit}
               />
             ))}
+          {editMode && (
+            <EditWindow
+              setEditMode={setEditMode}
+              updatePosts={updateUserData}
+              username={user.name}
+              lastPost={postToEdit}
+            />
+          )}
         </div>
       </div>
       {friendProfile !== "" && (

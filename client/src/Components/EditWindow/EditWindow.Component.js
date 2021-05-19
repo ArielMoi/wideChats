@@ -1,27 +1,34 @@
-import { useState, useEffect } from "react";
-import APi from "../../API";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import API from "../../API";
+import "./EditWindow.css";
 
-const EditWindow = ({ lastPost, username, updatePosts }) => {
-  const [text, setText] = useState(lastPost);
-  const history = useHistory()
+const EditWindow = ({ lastPost, username, updatePosts, setEditMode }) => {
+  const [text, setText] = useState(lastPost.text);
 
   const replacePost = async () => {
+    console.log(lastPost);
     await API.patch("/users/posts", {
       username,
       lastPost,
-      newPost: text,
+      newPost: {text, time: lastPost.time}
     });
 
-    history.push(`/profile/${username}`);
+    setEditMode(false);
     updatePosts();
   };
 
   return (
-    <div>
-      <textarea value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={() => history.push(`/profile/${username}`)}>Cancel</button>
-      <button onClick={replacePost}>Submit</button>
+    <div className="edit-window">
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows="10"
+        cols="80"
+      />
+      <div>
+        <button onClick={() => setEditMode(false)}>Cancel</button>
+        <button onClick={replacePost}>Submit</button>
+      </div>
     </div>
   );
 };

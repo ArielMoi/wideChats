@@ -165,9 +165,9 @@ const App = () => {
             <CreatedChats
               user={userData}
               chats={chats}
-              setCurrentRoom={setCurrentRoom}
               enterChat={enterChat}
               addToFav={addToFav}
+              setChats={setChats}
             />
           ) : (
             <UserNotLogged />

@@ -3,8 +3,9 @@ import ChatsShowcaseHeader from "../ChatsShowcaseHeader/ChatsShowcaseHeader.Comp
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useHistory } from "react-router-dom";
+import API from "../../API";
 
-const CreatedChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
+const CreatedChats = ({ user, chats, enterChat, addToFav, setChats }) => {
   const [createdChats, setCreatedChats] = useState([]);
   const history = useHistory();
   const [searchChats, setSearchChats] = useState([]);
@@ -22,6 +23,17 @@ const CreatedChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
 
     collectCreatedChats();
   }, []);
+
+  const deleteChat = async (chatName) => {
+    await API.delete(`/chats/${chatName}`);
+
+    const updatedChats = chats.filter(
+      (chat) => !user.createdChats.includes(chat.name) && chat.name !== chatName
+    );
+    
+    setChats(chats.filter((chat) => chat.name !== chatName));
+    setCreatedChats(updatedChats);
+  };
 
   return (
     <div className="chats-showcase">
@@ -42,6 +54,7 @@ const CreatedChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
           }}
           addToFav={addToFav}
           tag={chat.type}
+          deleteChat={deleteChat}
         />
       ))}
       {createdChats.map((chat) => (
@@ -54,6 +67,7 @@ const CreatedChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
           }}
           addToFav={addToFav} // ! -- need to be remove from fav
           tag={chat.type}
+          deleteChat={deleteChat}
         />
       ))}
     </div>

@@ -32,17 +32,17 @@ const addToUserFav = async (userName, chat) => {
 const addToUserCreated = async (userName, chat) => {
   return await User.findOneAndUpdate(
     { name: userName },
-    { $push: { createdChats: chat } },
+    { $unshift: { createdChats: chat } },
     { new: true }
   );
 };
 
 const addToUserPosts = async (userName, post) => {
-  return await User.findOneAndUpdate(
-    { name: userName },
-    { $push: { posts: post } },
-    { new: true }
-  );
+  const user = await User.findOne({ name: userName });
+  user.posts.unshift(post);
+
+  await user.save();
+  return user;
 };
 
 const addToUserFriends = async (userName, friendName) => {
@@ -94,7 +94,7 @@ const deleteFavorite = async (username, chatToDelete) => {
 
   const updatedFavorites = user.favoriteChats.filter(
     (chat) => chat !== chatToDelete
-  );  
+  );
 
   user.favoriteChats = updatedFavorites;
   await user.save();

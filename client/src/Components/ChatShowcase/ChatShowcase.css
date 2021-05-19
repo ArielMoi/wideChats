@@ -1,7 +1,7 @@
 .chat-showcase {
   padding: 5px 20px;
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   margin: 2% 20%;
   border: 1px solid #c1a1d3;
   border-radius: 5px;
@@ -15,6 +15,7 @@
 .chat-showcase h4,
 .chat-showcase h5 {
   margin-top: 3px;
+  width: 22%;
 }
 
 @media (max-width: 860px) {
