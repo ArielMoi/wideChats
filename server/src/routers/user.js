@@ -5,6 +5,9 @@ const {
   addToUserFavController,
   addToUserPostsController,
   addToUserFriendsController,
+  deletePostController,
+  replacePostController,
+  deleteFriendController,
 } = require("../controllers/user");
 const express = require("express");
 const router = new express.Router();
@@ -21,10 +24,10 @@ router.patch("/users/", addToUserPostsController);
 
 router.patch("/users/friends/", addToUserFriendsController);
 
-// remove Posts
+router.patch("/users/posts/", replacePostController);
 
-// remove from friend list
+router.delete("/users/posts/", deletePostController);
 
-// add and remove direct chats
+router.delete("/users/friends/", deleteFriendController);
 
 module.exports = router;

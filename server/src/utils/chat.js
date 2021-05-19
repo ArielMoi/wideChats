@@ -27,9 +27,14 @@ const getAllUserChats = async (userId) => {
   return await Chat.find({ creator: userId });
 };
 
+const removeChat = async (chatName) => {
+  return await Chat.findOneAndDelete({name: chatName})
+}
+
 module.exports = {
   addChat,
   getChat,
   getAllChats,
   getAllUserChats,
+  removeChat,
 };

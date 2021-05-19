@@ -5,6 +5,7 @@ const {
   getChat,
   getAllChats,
   getAllUserChats,
+  removeChat,
 } = require("../utils/chat");
 
 const addChatController = async (req, res) => {
@@ -13,7 +14,7 @@ const addChatController = async (req, res) => {
       req.body.name,
       req.body.creator,
       req.body.isAnonymous && req.body.isAnonymous,
-      req.body.type && req.body.type,
+      req.body.type && req.body.type
     );
     res.status(200).send(chat);
   } catch (e) {
@@ -44,17 +45,18 @@ const getAllChatsController = async (req, res) => {
   }
 };
 
-// const getAllUserChatsController = async (req, res) => {
-//   try {
-//     const userChats = await getAllUserChats(req.body._id);
-//     res.status(200).send(userChats);
-//   } catch (e) {
-//     res.status(400).send(e.message);
-//   }
-// };
+const removeChatController = async (req, res) => {
+  try {
+    const chat = await removeChat(req.params.name);
+    res.status(200).send(chat);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 
 module.exports = {
   addChatController,
   getChatController,
   getAllChatsController,
+  removeChatController,
 };

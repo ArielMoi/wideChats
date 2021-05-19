@@ -8,6 +8,9 @@ const {
   addToUserCreated,
   addToUserPosts,
   addToUserFriends,
+  deletePost,
+  replacePost,
+  deleteFriend,
 } = require("../utils/user");
 
 const addUserController = async (req, res) => {
@@ -70,27 +73,40 @@ const addToUserFriendsController = async (req, res) => {
   }
 };
 
-//TODO: create the utils: 
-// const removeUserPostsController = async (req, res) => {
-//   try {
-//     const user = await removeUserPost(req.body.username, req.body.post);
-//     res.status(200).send(user);
-//   } catch (e) {
-//     res.status(400).send(e.message);
-//   }
-// };
+// deletePost,
+//   replacePost,
+//   deleteFriend,
 
-// const removeUserFriendsController = async (req, res) => {
-//   try {
-//     const user = await removeUserFriend(
-//       req.body.username,
-//       req.body.friendName
-//     );
-//     res.status(200).send(user);
-//   } catch (e) {
-//     res.status(400).send(e.message);
-//   }
-// };
+const deletePostController = async (req, res) => {
+  try {
+    const user = await deletePost(req.body.username, req.body.post);
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
+const replacePostController = async (req, res) => {
+  try {
+    const user = await replacePost(
+      req.body.username,
+      req.body.lastPost,
+      req.body.newPost
+    );
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
+const deleteFriendController = async (req, res) => {
+  try {
+    const user = await deleteFriend(req.body.username, req.body.friendToDelete);
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 
 module.exports = {
   addUserController,
@@ -99,6 +115,7 @@ module.exports = {
   addToUserFavController,
   addToUserPostsController,
   addToUserFriendsController,
-  // removeUserPostsController,
-  // removeUserFriendsController,
+  deletePostController,
+  replacePostController,
+  deleteFriendController,
 };
