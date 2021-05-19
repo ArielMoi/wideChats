@@ -16,3 +16,9 @@
 .chat-showcase h5 {
   margin-top: 3px;
 }
+
+@media (max-width: 860px) {
+  .chat-showcase {
+    margin: 5% 5%;
+  }
+}

@@ -12,3 +12,12 @@
 .msg {
   margin: 10px 2px;
 }
+
+@media (max-width: 840px) {
+  .msg {
+    margin: 5px 2px;
+  }
+  .msg .text {
+    max-width: 68.5vw;
+  }
+}

@@ -1,3 +1,5 @@
+import "./ChatsShowcaseHeader.css";
+
 const ChatsShowcaseHeader = ({ searchByType, setSearchByType,setSearchChats, chats }) => {
   const search = (input) => {
     const a = searchByType
@@ -7,7 +9,7 @@ const ChatsShowcaseHeader = ({ searchByType, setSearchByType,setSearchChats, cha
   };
 
   return (
-    <div className="headers">
+    <div className="chat-showcase-header">
       <input type="text" onChange={(event) => search(event.target.value)} />
       <i className="fas fa-search"></i>
       <input

@@ -26,3 +26,9 @@
 .profile .data input {
   margin-bottom: 2%;
 }
+
+@media (max-width: 860px) {
+  .profile {
+    margin-top: 12%;
+  }
+}

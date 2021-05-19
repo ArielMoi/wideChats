@@ -10,4 +10,11 @@
 
 .data {
   text-align: center;
+  margin-top: 5px;
+}
+
+@media (max-width: 860px) {
+  .friend-profile {
+    margin-top: 12%;
+  }
 }
