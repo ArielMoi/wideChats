@@ -26,13 +26,17 @@ const FriendsSearch = ({ user, updateUserData, setFriendProfile }) => {
     updateUserData();
   };
 
-  const removeFromFriends = async (friendName) => {
-    console.log("future func");
+  const removeFromFriends = async (friendToDelete) => {
+    await API.delete('/users/friends', {data:{
+      username: user.name,
+      friendToDelete,
+    }})
+    
     updateUserData();
   };
 
   return (
-    <div class='friend-search'>
+    <div className='friend-search'>
       <form>
         <input
           type="text"

@@ -3,13 +3,14 @@ import ChatsShowcaseHeader from "../ChatsShowcaseHeader/ChatsShowcaseHeader.Comp
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useHistory } from "react-router-dom";
+import API from "../../API";
 
-const FavChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
+const FavChats = ({ user, chats, enterChat, setChats }) => {
   const [favChats, setFavChats] = useState([]);
   const history = useHistory();
   const [searchChats, setSearchChats] = useState([]);
   const [searchByType, setSearchByType] = useState(false);
-  
+
   useEffect(() => {
     const collectFavChats = async () => {
       const arrayOfChats = [];
@@ -19,9 +20,25 @@ const FavChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
       );
       setFavChats(arrayOfChats);
     };
-
     collectFavChats();
   }, []);
+
+  const removeFromFavorites = async (favoriteToDelete) => {
+    await API.delete("/users/favorites/", {
+      data: {
+        username: user.name,
+        favoriteToDelete,
+      },
+    });
+
+    const arrayOfChats = chats.filter(
+      (chat) =>
+        user.favoriteChats.includes(chat.name) && chat.name !== favoriteToDelete
+    );
+
+    setChats(chats.filter((chat) => chat.name !== favoriteToDelete));
+    setFavChats(arrayOfChats);
+  };
 
   return (
     <div className="chats-showcase">
@@ -40,7 +57,7 @@ const FavChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
             enterChat(chat);
             history.push("/chat");
           }}
-          addToFav={addToFav}
+          removeFromFav={removeFromFavorites}
           tag={chat.type}
         />
       ))}
@@ -52,7 +69,8 @@ const FavChats = ({ user, chats, setCurrentRoom, enterChat, addToFav }) => {
             enterChat(chat);
             history.push("/chat");
           }}
-          addToFav={addToFav} // ! -- need to be remove from fav
+          removeFromFav={removeFromFavorites}
+          s
           tag={chat.type}
         />
       ))}

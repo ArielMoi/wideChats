@@ -56,7 +56,9 @@ const addToUserFriends = async (userName, friendName) => {
 const deletePost = async (username, post) => {
   const user = await User.findOne({ name: username });
 
-  const updatedPosts = user.posts.filter((userPost) => userPost !== post);
+  const updatedPosts = user.posts.filter(
+    (userPost) => userPost.text != post.text && userPost.time != post.time
+  );
 
   user.posts = updatedPosts;
   await user.save();
@@ -67,7 +69,7 @@ const replacePost = async (username, lastPost, newPost) => {
   const user = await User.findOne({ name: username });
 
   const updatedPosts = user.posts.map((post) =>
-    lastPost !== post ? post : newPost
+    lastPost.text !== post.text ? post : newPost
   );
 
   user.posts = updatedPosts;
@@ -78,7 +80,9 @@ const replacePost = async (username, lastPost, newPost) => {
 const deleteFriend = async (username, friendToDelete) => {
   const user = await User.findOne({ name: username });
 
-  const updatedFriends = user.friends.filter(friend => friend === friendToDelete)
+  const updatedFriends = user.friends.filter(
+    (friend) => friend === friendToDelete
+  );
 
   user.friends = updatedFriends;
   await user.save();
@@ -89,8 +93,8 @@ const deleteFavorite = async (username, chatToDelete) => {
   const user = await User.findOne({ name: username });
 
   const updatedFavorites = user.favoriteChats.filter(
-    (chat) => chat === chatToDelete
-  );
+    (chat) => chat !== chatToDelete
+  );  
 
   user.favoriteChats = updatedFavorites;
   await user.save();

@@ -10,7 +10,7 @@ const {
   addToUserFriends,
   deletePost,
   replacePost,
-  deleteFriend
+  deleteFriend,
   deleteFavorite,
 } = require("../utils/user");
 
@@ -76,6 +76,8 @@ const addToUserFriendsController = async (req, res) => {
 
 const deletePostController = async (req, res) => {
   try {
+    console.log("aaa");
+    console.log(req.body); //! log {} for some reason
     const user = await deletePost(req.body.username, req.body.post);
     res.status(200).send(user);
   } catch (e) {

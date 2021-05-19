@@ -153,9 +153,8 @@ const App = () => {
             <FavChats
               user={userData}
               chats={chats}
-              setCurrentRoom={setCurrentRoom}
+              setChats={setChats}
               enterChat={enterChat}
-              addToFav={addToFav}
             />
           ) : (
             <UserNotLogged />
@@ -187,13 +186,11 @@ const App = () => {
         </Route>
         <Route path="/:friendName/chat" exact>
           {isAuthenticated ? (
-          <Chat
-            username={
-              user ? user.nickname : ""
-            }
-            room='direct'
-            chats={chats}
-          />
+            <Chat
+              username={user ? user.nickname : ""}
+              room="direct"
+              chats={chats}
+            />
           ) : (
             <UserNotLogged />
           )}

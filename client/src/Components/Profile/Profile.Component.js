@@ -5,7 +5,7 @@ import Post from "../Post/Post.Component";
 import FriendProfile from "../FriendProfile/FriendProfile.Component";
 import date from "date-and-time";
 import { v4 as uuid } from "uuid";
-import './Profile.css'
+import "./Profile.css";
 
 const Profile = ({ profileImg, user, setUserData }) => {
   const [post, setPost] = useState("");
@@ -31,7 +31,10 @@ const Profile = ({ profileImg, user, setUserData }) => {
 
   return (
     <div>
-      <div className="profile" style={{ display: friendProfile !== "" ? "none" : "block" }}>
+      <div
+        className="profile"
+        style={{ display: friendProfile !== "" ? "none" : "block" }}
+      >
         <div className="header">
           <img src={profileImg} alt="profile-img" />
           <h1>{user.name}</h1>
@@ -67,7 +70,14 @@ const Profile = ({ profileImg, user, setUserData }) => {
             />
           )}
           {currentlyShownData === "posts" &&
-            user.posts.map((post) => <Post post={post} key={uuid()} />)}
+            user.posts.map((post) => (
+              <Post
+                post={post}
+                key={uuid()}
+                username={user.name}
+                updateUserData={updateUserData}
+              />
+            ))}
         </div>
       </div>
       {friendProfile !== "" && (
