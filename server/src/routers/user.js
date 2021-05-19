@@ -8,6 +8,7 @@ const {
   deletePostController,
   replacePostController,
   deleteFriendController,
+  deleteFavoriteController,
 } = require("../controllers/user");
 const express = require("express");
 const router = new express.Router();
@@ -29,5 +30,7 @@ router.patch("/users/posts/", replacePostController);
 router.delete("/users/posts/", deletePostController);
 
 router.delete("/users/friends/", deleteFriendController);
+
+router.delete("/users/favorites/", deleteFavoriteController);
 
 module.exports = router;

@@ -10,7 +10,8 @@ const {
   addToUserFriends,
   deletePost,
   replacePost,
-  deleteFriend,
+  deleteFriend
+  deleteFavorite,
 } = require("../utils/user");
 
 const addUserController = async (req, res) => {
@@ -73,10 +74,6 @@ const addToUserFriendsController = async (req, res) => {
   }
 };
 
-// deletePost,
-//   replacePost,
-//   deleteFriend,
-
 const deletePostController = async (req, res) => {
   try {
     const user = await deletePost(req.body.username, req.body.post);
@@ -108,6 +105,15 @@ const deleteFriendController = async (req, res) => {
   }
 };
 
+const deleteFavoriteController = async (req, res) => {
+  try {
+    const user = await deleteFavorite(req.body.username, req.body.favoriteToDelete);
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
 module.exports = {
   addUserController,
   getUserController,
@@ -118,4 +124,5 @@ module.exports = {
   deletePostController,
   replacePostController,
   deleteFriendController,
+  deleteFavoriteController,
 };

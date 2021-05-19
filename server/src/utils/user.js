@@ -85,6 +85,18 @@ const deleteFriend = async (username, friendToDelete) => {
   return user;
 };
 
+const deleteFavorite = async (username, chatToDelete) => {
+  const user = await User.findOne({ name: username });
+
+  const updatedFavorites = user.favoriteChats.filter(
+    (chat) => chat === chatToDelete
+  );
+
+  user.favoriteChats = updatedFavorites;
+  await user.save();
+  return user;
+};
+
 module.exports = {
   addUser,
   getUser,
@@ -96,4 +108,5 @@ module.exports = {
   deletePost,
   replacePost,
   deleteFriend,
+  deleteFavorite,
 };
