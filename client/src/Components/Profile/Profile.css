@@ -1,0 +1,28 @@
+.profile {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.profile button {
+  margin: 3px;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+.profile .header img {
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.status-input {
+  margin: 2.5%;
+}
+
+.status-input button {
+  display: block;
+  margin-left: 49%;
+}
+
+.profile .data input {
+  margin-bottom: 2%;
+}

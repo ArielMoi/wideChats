@@ -1,0 +1,10 @@
+.post {
+  margin: 1%;
+  border: 1px solid #fff;
+  padding: 1%;
+  text-align: left;
+}
+
+.post span {
+  font-size: 0.6rem;
+}

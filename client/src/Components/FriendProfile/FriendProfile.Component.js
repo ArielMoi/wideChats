@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import API from "../../API";
 import Post from "../Post/Post.Component";
 import ShowcaseDataUsers from "../ShowcaseDataUsers/ShowcaseDataUsers.Component";
+import "./FriendProfile.css";
 
 const FriendProfile = ({ friendName, setFriendProfile }) => {
   const [profileData, setProfileData] = useState([]);
@@ -21,7 +22,7 @@ const FriendProfile = ({ friendName, setFriendProfile }) => {
 
   return (
     <div>
-      <div className="header">
+      <div className="friend-profile">
         {/* <img src={profileImg} alt="profile-img" /> */}
         <h1>{profileData.name}</h1>
         {currentlyShownData === "friends" && (

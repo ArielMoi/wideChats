@@ -5,6 +5,7 @@ import Post from "../Post/Post.Component";
 import FriendProfile from "../FriendProfile/FriendProfile.Component";
 import date from "date-and-time";
 import { v4 as uuid } from "uuid";
+import './Profile.css'
 
 const Profile = ({ profileImg, user, setUserData }) => {
   const [post, setPost] = useState("");

@@ -1,7 +1,9 @@
+import './Post.css'
+
 const Post = ({post}) => {
-    return(<div>
+    return(<div className='post'>
         <p><b>{post.text}</b></p>
-        <p>{post.time}</p>
+        <p><span>{post.time}</span></p>
     </div>)
 }
 
