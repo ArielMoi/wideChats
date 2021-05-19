@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const Chat = require("./src/models/chat");
+const DirectChat = require("./src/models/directChat");
 
 // socket.io -
 const http = require("http");
@@ -37,9 +38,9 @@ let currentRoom;
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
-  socket.on("join", async ({chat, userData}) => {
+  socket.on("join", async ({ chat, userData }) => {
     socket.join(userData);
-    socket.join('====');// TODO here add an user joined chat message option
+    socket.join("===="); // TODO here add an user joined chat message option
     currentRoom = chat.name;
     // await Chat.findOneAndUpdate(
     //   { name: chat.name },
@@ -49,11 +50,18 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", async (message) => {
     socket.join(message.room);
-    await Chat.findOneAndUpdate(
-      { name: currentRoom },
-      { $push: { messages: message } },
-      { new: true }
-    );
+    if (message.direct) {
+      await DirectChat.findOneAndUpdate(
+        { name: currentRoom },
+        { $push: { messages: message } }
+      );
+    } else {
+      await Chat.findOneAndUpdate(
+        { name: currentRoom },
+        { $push: { messages: message } }
+      );
+    }
+
     io.to(message.room).emit("message", message);
   });
 

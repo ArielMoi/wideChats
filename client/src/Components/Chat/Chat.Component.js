@@ -43,7 +43,9 @@ const Chat = (props) => {
       username: props.username,
       time: date.format(new Date(), "DD/MM HH:mm"),
       room: props.currentRoom,
+      direct: props.room === "direct",
     });
+
     setCurrentMessage("");
   };
 
@@ -60,6 +62,7 @@ const Chat = (props) => {
         room: props.currentRoom,
         username: props.username,
         time: date.format(new Date(), "DD/MM HH:mm"),
+        direct: props.room === "direct",
       });
     });
   };
@@ -88,7 +91,7 @@ const Chat = (props) => {
         ]);
       }
     } else {
-      console.log('direct chat');
+      console.log("direct chat");
       const startDirectChat = async () => {
         let room = [friendName, props.username].sort().join("");
 
@@ -96,13 +99,13 @@ const Chat = (props) => {
         try {
           const { data } = await API.get(`/direct-chats/${room}`);
           roomData = data;
-        } catch(e) {
+        } catch (e) {
           // case of first direct message
           console.log(e);
-          const {data} = await API.post(`/direct-chats`, {
+          const { data } = await API.post(`/direct-chats`, {
             participants: [friendName, props.username],
           });
-          roomData = data
+          roomData = data;
         }
 
         setCurrentRoom(room);
