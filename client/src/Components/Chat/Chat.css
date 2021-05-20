@@ -12,3 +12,9 @@
   background: #eaeaea;
   border-radius: 20px;
 }
+
+.participants {
+  position: fixed;
+  top: 10%;
+  left: 2%;
+}

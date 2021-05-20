@@ -9,6 +9,7 @@ import "./Chat.css";
 import { origin, socketUri } from "../../cors"; // for dev or production
 import { useParams } from "react-router-dom";
 import API from "../../API";
+import ParticipantsShowcase from "../ParticipantsShowcase/ParticipantsShowcase.Component";
 
 const socket = openSocket(socketUri, {
   cors: {
@@ -21,6 +22,7 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentRoom, setCurrentRoom] = useState("");
+  const [addedParticipants, setAddedParticipants] = useState([props.room.participants])
   const { friendName } = useParams();
 
   socket.on("message", (message) => {
@@ -28,12 +30,18 @@ const Chat = (props) => {
       message.sent = true;
       setMessages([...messages, message]);
     } else {
+      message.sent = false;
       setMessages([...messages, message]);
     }
   });
 
   socket.on("locationMessage", (message) => {
     setMessages([...messages, message]);
+  });
+
+  socket.on("userJoined", (username) => {
+    console.log(username);
+    setAddedParticipants([...addedParticipants, username]);
   });
 
   const sendMessage = (event) => {
@@ -160,6 +168,11 @@ const Chat = (props) => {
         onClick={sendMessage}
         shareLocation={sendLocation}
       />
+      {/* <div className="participants">
+        <ParticipantsShowcase
+          participants={addedParticipants}
+        />
+      </div> */}
     </div>
   );
 };

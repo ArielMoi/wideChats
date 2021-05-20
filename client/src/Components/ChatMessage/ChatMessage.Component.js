@@ -1,16 +1,18 @@
 import "./ChatMessage.css";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const ChatMessage = (props) => {
   const messageRef = useRef();
 
-  useEffect(() => {
-    // console.log(messageRef);
-    // console.log(props.message.sent);
-    // if (props.message.sent) {
-    //   messageRef.style.background = "blue";
-    // }
-  }, []);
+  // useEffect(() => {
+  //   if (props.messageSent){
+  //     console.log('own user');
+  //     console.log(messageRef);
+  //     messageRef.style.backgroundColor = 'white'
+  //     // setMsgClass(msgClass + ' left')
+  //     // messageRef.background = 'blue';
+  //   }
+  // }, []);
 
   return (
     <div className="msg" ref={messageRef}>

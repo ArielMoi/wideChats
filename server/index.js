@@ -45,6 +45,8 @@ io.on("connection", (socket) => {
       { name: room },
       { $push: { participants: username } }
     );
+
+    io.to(room).emit("userJoined", username);
   });
 
   socket.on("sendMessage", async (message) => {
@@ -73,9 +75,12 @@ io.on("connection", (socket) => {
 
   socket.on("disconnected", async ({ room, username }) => {
     const chat = await Chat.findOne({ name: room });
-
-    chat.participants = chat.participants.filter(user => user !== username);
-    await chat.save();
+    if (chat) {
+      console.log(chat.participants);
+      console.log([...new Set(chat.participants)]);
+      chat.participants = [...new Set(chat.participants)].filter((user) => user !== username);
+      await chat.save();
+    }
   });
 });
 
