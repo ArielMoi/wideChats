@@ -3,6 +3,11 @@
   text-align: center;
 }
 
+.friend-profile img {
+  width: 100px;
+  border-radius: 50%;
+}
+
 .friend-profile button {
   margin: 2px;
   padding: 2px;

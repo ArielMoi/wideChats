@@ -23,7 +23,7 @@ const FriendProfile = ({ friendName, setFriendProfile }) => {
   return (
     <div>
       <div className="friend-profile">
-        {/* <img src={profileImg} alt="profile-img" /> */}
+        <img src={profileData.pic} alt="profile-img" />
         <h1>{profileData.name}</h1>
         {currentlyShownData === "friends" && (
           <button onClick={() => setCurrentlyShownData("posts")}>

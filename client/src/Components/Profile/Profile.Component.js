@@ -60,6 +60,8 @@ const Profile = ({ profileImg, user, setUserData }) => {
               placeholder="how you feeling?"
               onChange={(e) => setPost(e.target.value)}
               value={post}
+              rows="4"
+              cols="45"
             />
             <button onClick={submitPost} type="submit">
               Post

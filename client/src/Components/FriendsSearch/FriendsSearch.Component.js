@@ -36,7 +36,7 @@ const FriendsSearch = ({ user, updateUserData, setFriendProfile }) => {
   };
 
   return (
-    <div className='friend-search'>
+    <div className="friend-search">
       <form>
         <input
           type="text"
@@ -70,7 +70,8 @@ const FriendsSearch = ({ user, updateUserData, setFriendProfile }) => {
           showMyFriends &&
           allUsers.map(
             (friend) =>
-              user.friends.includes(friend.name) && (
+              user.friends.includes(friend.name) &&
+              friend.name.includes(currentSearch) && (
                 <ShowcaseDataUsers
                   name={friend.name}
                   addFunc={() => removeFromFriends(friend.name)}

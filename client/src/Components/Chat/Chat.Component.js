@@ -42,7 +42,7 @@ const Chat = (props) => {
       text: currentMessage,
       username: props.username,
       time: date.format(new Date(), "DD/MM HH:mm"),
-      room: props.currentRoom,
+      room: props.room.name,
       direct: props.room === "direct",
     });
 
@@ -59,7 +59,7 @@ const Chat = (props) => {
     navigator.geolocation.getCurrentPosition((position) => {
       socket.emit("sendLocation", {
         coords: `http://google.com/maps/?q=${position.coords.latitude},${position.coords.longitude}`,
-        room: props.currentRoom,
+        room: props.room.name,
         username: props.username,
         time: date.format(new Date(), "DD/MM HH:mm"),
         direct: props.room === "direct",
@@ -121,7 +121,17 @@ const Chat = (props) => {
 
       startDirectChat();
     }
+    console.log(props.room.name);
+    socket.emit("join", { room: props.room.name, username: props.username });
   }, [props.room, currentRoom]);
+
+  useEffect(() => {
+    return () =>
+      socket.emit("disconnected", {
+        room: props.room.name,
+        username: props.username,
+      });
+  }, []);
 
   return (
     <div className="chat-window">

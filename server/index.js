@@ -38,18 +38,16 @@ let currentRoom;
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
 
-  socket.on("join", async ({ chat, userData }) => {
-    socket.join(userData);
-    socket.join("===="); // TODO here add an user joined chat message option
-    currentRoom = chat.name;
-    // await Chat.findOneAndUpdate(
-    //   { name: chat.name },
-    //   { $push: { participants: userData.name } }
-    // );
+  socket.on("join", async ({ room, username }) => {
+    socket.join(room);
+    currentRoom = room;
+    await Chat.findOneAndUpdate(
+      { name: room },
+      { $push: { participants: username } }
+    );
   });
 
   socket.on("sendMessage", async (message) => {
-    socket.join(message.room);
     if (message.direct) {
       await DirectChat.findOneAndUpdate(
         { name: currentRoom },
@@ -66,12 +64,18 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendLocation", async (message) => {
-    socket.join(message.room);
     await Chat.findOneAndUpdate(
       { name: currentRoom },
       { $push: { messages: message } }
     );
     io.to(message.room).emit("locationMessage", message);
+  });
+
+  socket.on("disconnected", async ({ room, username }) => {
+    const chat = await Chat.findOne({ name: room });
+
+    chat.participants = chat.participants.filter(user => user !== username);
+    await chat.save();
   });
 });
 

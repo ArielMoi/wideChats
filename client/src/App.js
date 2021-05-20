@@ -47,7 +47,7 @@ const App = () => {
     const {data} = await API.get(`/users/${user.nickname}`);
     const profile = data[0];
     console.log(profile);
-    if (profile.length <= 1) {
+    if (profile === undefined) {
       console.log("profile don`t exists");
       const { data } = await createProfile(user);
       console.log(data);
@@ -90,6 +90,7 @@ const App = () => {
     const profile = await API.post(`/users/`, {
       name: user.nickname,
       email: user.email,
+      // pic: user.picture,
     });
 
     return profile;

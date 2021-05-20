@@ -5,7 +5,7 @@ const ChatMessage = (props) => {
   const messageRef = useRef();
 
   useEffect(() => {
-    console.log(messageRef);
+    // console.log(messageRef);
     // console.log(props.message.sent);
     // if (props.message.sent) {
     //   messageRef.style.background = "blue";
