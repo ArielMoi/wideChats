@@ -49,7 +49,7 @@ const FriendProfile = ({ friendName, setFriendProfile }) => {
         {allUsers &&
           currentlyShownData === "posts" &&
           profileData.posts &&
-          profileData.posts.map((post) => <Post post={post} />)}
+          profileData.posts.map((post) => <Post post={post} friend={true}/>)}
       </div>
     </div>
   );

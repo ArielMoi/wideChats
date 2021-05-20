@@ -7,6 +7,7 @@ const Post = ({
   updateUserData,
   setEditMode,
   setPostToEdit,
+  friend,
 }) => {
   const deletePost = async () => {
     await API.delete("/users/posts/", {
@@ -20,9 +21,9 @@ const Post = ({
   };
 
   const startEdit = () => {
-    setEditMode(true) 
-    setPostToEdit(post)
-  }
+    setEditMode(true);
+    setPostToEdit(post);
+  };
 
   return (
     <div className="post">
@@ -32,10 +33,12 @@ const Post = ({
       <p>
         <span>{post.time}</span>
       </p>
-      <button onClick={deletePost}>X</button>
-      <button className="edit" onClick={startEdit}>
-        <i className="far fa-edit"></i>
-      </button>
+      {!friend && <button onClick={deletePost}>X</button>}
+      {!friend && (
+        <button className="edit" onClick={startEdit}>
+          <i className="far fa-edit"></i>
+        </button>
+      )}
     </div>
   );
 };

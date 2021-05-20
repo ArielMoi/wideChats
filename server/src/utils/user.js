@@ -81,7 +81,7 @@ const deleteFriend = async (username, friendToDelete) => {
   const user = await User.findOne({ name: username });
 
   const updatedFriends = user.friends.filter(
-    (friend) => friend === friendToDelete
+    (friend) => friend !== friendToDelete
   );
 
   user.friends = updatedFriends;

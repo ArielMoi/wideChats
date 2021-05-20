@@ -85,6 +85,7 @@ const Profile = ({ profileImg, user, setUserData }) => {
                 updateUserData={updateUserData}
                 setEditMode={setEditMode}
                 setPostToEdit={setPostToEdit}
+                friend={false}
               />
             ))}
           {editMode && (
