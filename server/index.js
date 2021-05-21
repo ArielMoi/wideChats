@@ -41,15 +41,15 @@ io.on("connection", (socket) => {
   socket.on("join", async ({ room, username }) => {
     socket.join(room);
     currentRoom = room;
+    io.to(room).emit("userJoined", username);
     await Chat.findOneAndUpdate(
       { name: room },
       { $push: { participants: username } }
     );
-
-    io.to(room).emit("userJoined", username);
   });
 
   socket.on("sendMessage", async (message) => {
+    io.to(message.room).emit("message", message);
     if (message.direct) {
       await DirectChat.findOneAndUpdate(
         { name: currentRoom },
@@ -61,24 +61,22 @@ io.on("connection", (socket) => {
         { $push: { messages: message } }
       );
     }
-
-    io.to(message.room).emit("message", message);
   });
 
   socket.on("sendLocation", async (message) => {
+    io.to(message.room).emit("locationMessage", message);
     await Chat.findOneAndUpdate(
       { name: currentRoom },
       { $push: { messages: message } }
     );
-    io.to(message.room).emit("locationMessage", message);
   });
 
   socket.on("disconnected", async ({ room, username }) => {
     const chat = await Chat.findOne({ name: room });
     if (chat) {
-      console.log(chat.participants);
-      console.log([...new Set(chat.participants)]);
-      chat.participants = [...new Set(chat.participants)].filter((user) => user !== username);
+      chat.participants = [...new Set(chat.participants)].filter(
+        (user) => user !== username
+      );
       await chat.save();
     }
   });

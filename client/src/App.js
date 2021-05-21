@@ -50,7 +50,6 @@ const App = () => {
     if (profile === undefined) {
       console.log("profile don`t exists");
       const { data } = await createProfile(user);
-      console.log(data);
       setUserData(data[0]);
     } else {
       console.log("profile exists");
