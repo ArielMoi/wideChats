@@ -40,7 +40,6 @@ const Chat = (props) => {
   });
 
   socket.on("userJoined", (username) => {
-    console.log(username);
     setAddedParticipants([...addedParticipants, username]);
   });
 
@@ -87,7 +86,6 @@ const Chat = (props) => {
     if (props.room !== "direct") {
       const chat = props.chats.find((chat) => chat.name === props.room.name);
       if (currentRoom !== props.room.name) {
-        console.log("room change");
         setCurrentRoom(props.room);
         setMessages([
           {
@@ -99,7 +97,6 @@ const Chat = (props) => {
         ]);
       }
     } else {
-      console.log("direct chat");
       const startDirectChat = async () => {
         let room = [friendName, props.username].sort().join("");
 
